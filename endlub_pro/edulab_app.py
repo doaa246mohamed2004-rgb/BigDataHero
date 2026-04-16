@@ -23,21 +23,24 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. قاعدة البيانات والكلمات المفتاحية
+# 3. قاعدة البيانات (موسعة لتشمل كل طرق الكلام)
 knowledge_base = {
-    "تعريف": "💡 البيانات الضخمة هي: مجموعات بيانات ضخمة جداً ومعقدة، البرامج العادية مش بتقدر تتعامل معاها.",
-    "خصائص": "📌 الخصائص الأساسية (3Vs): الحجم، السرعة، والتنوع.",
-    "أهمية": "🌟 الأهمية: بتساعدنا ناخد قرارات ذكية في الطب والتجارة والتعليم.",
-    "وظائف": "👨‍💻 الوظائف: محلل بيانات، مهندس بيانات، أو خبير ذكاء اصطناعي.",
-    "مصادر": "🌐 المصادر: السوشيال ميديا، الـ GPS، والساعات الذكية."
+    "تعريف": "💡 البيانات الضخمة (Big Data) هي: كميات هائلة من المعلومات اللي بتيجي بسرعة وتنوع كبير، والكمبيوترات العادية مش بتقدر تعالجها لوحدها.",
+    "خصائص": "📌 الخصائص الأساسية (3Vs):\n1. الحجم (Volume)\n2. السرعة (Velocity)\n3. التنوع (Variety).",
+    "أهمية": "🌟 الأهمية: بتساعدنا نتوقع اللي هيحصل في المستقبل، ونطور الطب، وننظم حركة المرور في المدن الذكية.",
+    "وظائف": "👨‍💻 وظائف المستقبل: محلل بيانات، مهندس بيانات ضخمة، أو خبير ذكاء اصطناعي. دي من أعلى الوظائف طلباً!",
+    "مصادر": "🌐 بتيجي منين؟ من السوشيال ميديا، الـ GPS، الساعات الذكية، وحتى عمليات الشراء اللي بنعملها أونلاين.",
+    "فرق": "⚖️ الفرق: البيانات العادية بسيطة ومنظمة (زي جداول الإكسيل)، أما الضخمة فهي جبارة وعشوائية وتحتاج سيرفرات قوية جداً."
 }
 
-keywords = {
-    "تعريف": ["تعريف", "يعني ايه", "ماهي", "ايه هي"],
-    "خصائص": ["خصائص", "مميزات", "v3", "صفاتها"],
-    "أهمية": ["أهمية", "اهميه", "فائدة", "لازمتها"],
-    "وظائف": ["وظيفة", "وظائف", "شغل", "أشتغل"],
-    "مصادر": ["مصدر", "بتيجي منين", "منين"]
+# كلمات البحث (أضفت لك كل الاحتمالات اللي ممكن الطالب يكتبها)
+search_map = {
+    "تعريف": ["تعريف", "ماهي", "ايه هي", "البيانات الضخمة", "يعني ايه", "داتا", "data"],
+    "خصائص": ["خصائص", "مميزات", "صفات", "v3", "بتتكون"],
+    "أهمية": ["أهمية", "اهميه", "فائدة", "لازمتها", "بنستفيد"],
+    "وظائف": ["وظيفة", "وظائف", "شغل", "أشتغل", "مستقبل"],
+    "مصادر": ["مصدر", "مصادر", "بتيجي منين", "منين"],
+    "فرق": ["فرق", "مقارنة", "عادية", "تفرق"]
 }
 
 # 4. الواجهة والتحكم
@@ -49,17 +52,15 @@ st.sidebar.link_button("🔙 العودة إلى اللعبة", genially_link)
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# عرض الرسائل القديمة بأمان (بدون KeyError)
+# عرض الرسائل القديمة بأمان
 for message in st.session_state.messages:
     role_class = "user-text" if message["role"] == "user" else "bot-text"
     st.markdown(f'<div class="{role_class}">{message["content"]}</div>', unsafe_allow_html=True)
     if "chart" in message:
-        # استخدام get لتجنب الخطأ لو الـ type مش موجود
-        if message.get("type") == "area": st.area_chart(message["chart"])
-        else: st.bar_chart(message["chart"])
+        st.bar_chart(message["chart"])
 
-# 5. استقبال الأسئلة ونظام الرد
-query = st.chat_input("اسألني أي حاجة أو اطلب رسم بياني... 🤖")
+# 5. منطقة السؤال
+query = st.chat_input("اسألني عن البيانات الضخمة أو اطلب رسم بياني... 🤖")
 
 if query:
     st.markdown(f'<div class="user-text">👤 أنت: {query}</div>', unsafe_allow_html=True)
@@ -68,33 +69,26 @@ if query:
     
     response = None
     msg_data = {"role": "assistant"}
-    chart_df = pd.DataFrame({'السنة': ['2010', '2020', '2025'], 'الحجم': [2, 45, 175]}).set_index('السنة')
+    chart_df = pd.DataFrame({'السنة': ['2010', '2020', '2025'], 'الحجم (زيتابايت)': [2, 45, 175]}).set_index('السنة')
 
-    # أولاً: التأكد لو الطالب عاوز رسم بياني
-    if any(word in q_lower for word in ["رسم بياني", "شكل بياني", "مخطط"]):
-        response = "📊 ده رسم بياني بيوضح انفجار حجم البيانات عالمياً:"
+    # أولاً: التأكد لو الطالب عاوز رسم بياني (بمجرد وجود كلمة رسم أو شكل)
+    if any(word in q_lower for word in ["رسم", "شكل", "مخطط", "graph", "chart"]):
+        response = "📊 إليك رسم بياني يوضح الانفجار الهائل في حجم البيانات عالمياً (بالزيتابايت):"
         msg_data["chart"] = chart_df
-        msg_data["type"] = "bar"
-    elif "غير" in q_lower or "شكل تاني" in q_lower:
-        response = "✅ غيرت لك الشكل! ده مخطط مساحي نيون:"
-        msg_data["chart"] = chart_df
-        msg_data["type"] = "area"
     else:
         # ثانياً: البحث في المعلومات
-        for key, words in keywords.items():
-            if any(word in q_lower for word in words):
-                response = knowledge_base[key]
+        for category, keywords in search_map.items():
+            if any(word in q_lower for word in keywords):
+                response = knowledge_base[category]
                 break
     
     if not response:
-        response = "معلش مش فاهمك، اسألني عن (تعريف، خصائص، وظائف) أو اطلب رسم بياني!"
+        response = "عذراً يا بطل، حاول تسألني بشكل أوضح (مثلاً: ما هي الخصائص؟ أو اطلب رسم بياني)."
 
     msg_data["content"] = response
     st.markdown(f'<div class="bot-text">🤖 الوكيل: {response}</div>', unsafe_allow_html=True)
     
-    # عرض الرسم فوراً لو موجود
     if "chart" in msg_data:
-        if msg_data["type"] == "area": st.area_chart(msg_data["chart"])
-        else: st.bar_chart(msg_data["chart"])
+        st.bar_chart(msg_data["chart"])
         
     st.session_state.messages.append(msg_data)
