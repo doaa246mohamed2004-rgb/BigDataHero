@@ -23,31 +23,21 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. قاعدة البيانات (عامية وفصحى)
+# 3. قاعدة البيانات والكلمات المفتاحية
 knowledge_base = {
     "تعريف": "💡 البيانات الضخمة هي: مجموعات بيانات ضخمة جداً ومعقدة، البرامج العادية مش بتقدر تتعامل معاها.",
     "خصائص": "📌 الخصائص الأساسية (3Vs): الحجم، السرعة، والتنوع.",
-    "خطوات": "👣 خطوات التحليل: الجمع، التخزين، المعالجة، ثم الاستنتاج.",
     "أهمية": "🌟 الأهمية: بتساعدنا ناخد قرارات ذكية في الطب والتجارة والتعليم.",
-    "الطب": "🏥 الطب: توقع الأمراض والتشخيص الدقيق.",
-    "النقل": "🚗 النقل: تنظيم الزحمة وإدارة الطرق الذكية.",
     "وظائف": "👨‍💻 الوظائف: محلل بيانات، مهندس بيانات، أو خبير ذكاء اصطناعي.",
-    "مصادر": "🌐 المصادر: السوشيال ميديا، الـ GPS، والساعات الذكية.",
-    "فرق": "⚖️ الفرق: البيانات العادية بسيطة وجداول، الضخمة جبارة ومحتاجة تكنولوجيا خاصة.",
-    "خطر": "🛡️ الأمان: لازم نطبق قوانين (المواطنة الرقمية) عشان نحمي خصوصيتنا."
+    "مصادر": "🌐 المصادر: السوشيال ميديا، الـ GPS، والساعات الذكية."
 }
 
 keywords = {
     "تعريف": ["تعريف", "يعني ايه", "ماهي", "ايه هي"],
     "خصائص": ["خصائص", "مميزات", "v3", "صفاتها"],
-    "خطوات": ["خطوات", "ازاي", "طريقة", "مراحل"],
     "أهمية": ["أهمية", "اهميه", "فائدة", "لازمتها"],
-    "الطب": ["طب", "صحة", "دكتور", "علاج"],
-    "النقل": ["نقل", "مرور", "زحمة"],
     "وظائف": ["وظيفة", "وظائف", "شغل", "أشتغل"],
-    "مصادر": ["مصدر", "بتيجي منين", "منين"],
-    "فرق": ["فرق", "مقارنة", "عادية"],
-    "خطر": ["خطر", "أمان", "خصوصية", "سرقة"]
+    "مصادر": ["مصدر", "بتيجي منين", "منين"]
 }
 
 # 4. الواجهة والتحكم
@@ -59,17 +49,17 @@ st.sidebar.link_button("🔙 العودة إلى اللعبة", genially_link)
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# عرض الرسائل (تم تعديل هذا الجزء لحل المشكلة)
+# عرض الرسائل القديمة بأمان (بدون KeyError)
 for message in st.session_state.messages:
     role_class = "user-text" if message["role"] == "user" else "bot-text"
     st.markdown(f'<div class="{role_class}">{message["content"]}</div>', unsafe_allow_html=True)
     if "chart" in message:
-        chart_type = message.get("type", "bar") # استخدام .get لمنع الخطأ
-        if chart_type == "bar": st.bar_chart(message["chart"])
-        else: st.area_chart(message["chart"])
+        # استخدام get لتجنب الخطأ لو الـ type مش موجود
+        if message.get("type") == "area": st.area_chart(message["chart"])
+        else: st.bar_chart(message["chart"])
 
-# 5. استقبال الأسئلة
-query = st.chat_input("اسألني أي حاجة عن البيانات الضخمة... 🤖")
+# 5. استقبال الأسئلة ونظام الرد
+query = st.chat_input("اسألني أي حاجة أو اطلب رسم بياني... 🤖")
 
 if query:
     st.markdown(f'<div class="user-text">👤 أنت: {query}</div>', unsafe_allow_html=True)
@@ -78,21 +68,23 @@ if query:
     
     response = None
     msg_data = {"role": "assistant"}
+    chart_df = pd.DataFrame({'السنة': ['2010', '2020', '2025'], 'الحجم': [2, 45, 175]}).set_index('السنة')
 
-    # البحث عن معلومة
-    found_key = None
-    for key, words in keywords.items():
-        if any(word in q_lower for word in words):
-            found_key = key
-            break
-    
-    if found_key:
-        response = knowledge_base[found_key]
-    elif any(word in q_lower for word in ["رسم بياني", "شكل بياني", "مخطط"]):
-        response = "📊 ده رسم بياني بيوضح حجم البيانات عالمياً:"
-        chart_data = pd.DataFrame({'السنة': ['2010', '2020', '2025'], 'الحجم': [2, 45, 175]}).set_index('السنة')
-        msg_data["chart"] = chart_data
+    # أولاً: التأكد لو الطالب عاوز رسم بياني
+    if any(word in q_lower for word in ["رسم بياني", "شكل بياني", "مخطط"]):
+        response = "📊 ده رسم بياني بيوضح انفجار حجم البيانات عالمياً:"
+        msg_data["chart"] = chart_df
         msg_data["type"] = "bar"
+    elif "غير" in q_lower or "شكل تاني" in q_lower:
+        response = "✅ غيرت لك الشكل! ده مخطط مساحي نيون:"
+        msg_data["chart"] = chart_df
+        msg_data["type"] = "area"
+    else:
+        # ثانياً: البحث في المعلومات
+        for key, words in keywords.items():
+            if any(word in q_lower for word in words):
+                response = knowledge_base[key]
+                break
     
     if not response:
         response = "معلش مش فاهمك، اسألني عن (تعريف، خصائص، وظائف) أو اطلب رسم بياني!"
@@ -100,7 +92,9 @@ if query:
     msg_data["content"] = response
     st.markdown(f'<div class="bot-text">🤖 الوكيل: {response}</div>', unsafe_allow_html=True)
     
+    # عرض الرسم فوراً لو موجود
     if "chart" in msg_data:
-        st.bar_chart(msg_data["chart"])
+        if msg_data["type"] == "area": st.area_chart(msg_data["chart"])
+        else: st.bar_chart(msg_data["chart"])
         
     st.session_state.messages.append(msg_data)
