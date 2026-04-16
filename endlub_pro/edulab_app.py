@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 
-# 1. إعدادات الصفحة (تظهر في تبويب المتصفح)
+# 1. إعدادات الصفحة
 st.set_page_config(page_title="Big Data Hero 🤖📊", layout="centered")
 
-# 2. تصميم الواجهة النيون المطورة (CSS) - متناسب تماماً مع ثيم لعبتك
+# 2. تصميم الواجهة النيون المطورة (CSS)
 st.markdown("""
     <style>
     .stApp {
@@ -46,91 +46,68 @@ st.markdown("""
         direction: rtl;
         border-color: #00f2ff !important;
     }
-    /* تحسين شكل الأزرار في الجنب */
-    .stButton>button {
-        width: 100%;
-        background-color: #00f2ff;
-        color: black;
-        font-weight: bold;
-        border-radius: 10px;
-    }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. قاعدة البيانات التعليمية الشاملة (القديم + الجديد)
+# 3. قاعدة البيانات التعليمية الشاملة
 knowledge_base = {
-    "تعريف": "💡 البيانات الضخمة هي: مجموعات بيانات ضخمة جداً ومعقدة، تعجز الأنظمة التقليدية عن معالجتها أو تحليلها في وقت قصير.",
-    "خصائص": "📌 الخصائص الأساسية (3Vs):\n\n1. Volume (الحجم): الكميات المهولة من البيانات.\n2. Velocity (السرعة): سرعة توليد وتدفق البيانات.\n3. Variety (التنوع): اختلاف أنواع البيانات (نصوص، صور، فيديوهات).",
-    "خطوات": "👣 خطوات تحليل البيانات الضخمة:\n1. الجمع والفرز.\n2. التخزين والمعالجة.\n3. التحليل والاستنتاج.\n4. اتخاذ القرار المستند إلى البيانات.",
-    "أهمية": "🌟 الأهمية: تعتبر المحرك الأساسي للعالم الرقمي؛ فهي تساعد في تحويل المعلومات الخام إلى قرارات ذكية وتوقعات مستقبلية دقيقة.",
-    "الطب": "🏥 الرعاية الصحية: تُستخدم في توقع الأوبئة قبل انتشارها، التشخيص الدقيق للأمراض، وتطوير أدوية مخصصة بناءً على الجينات.",
-    "النقل": "🚗 النقل والمدن الذكية: تحسين حركة المرور، تقليل الحوادث، وإدارة أنظمة النقل الذاتي القيادة.",
-    "وظائف": "👨‍💻 المستقبل الوظيفي:\nيمكنك العمل كـ (محلل بيانات)، (مهندس بيانات ضخمة)، أو (خبير ذكاء اصطناعي). الوظائف المطلوبة جداً وبرواتب مجزية!",
-    "مصادر": "🌐 من أين تأتي؟\nمن السوشيال ميديا، سجلات GPS، مستشعرات المصانع، الساعات الذكية، وحتى عمليات الشراء عبر الإنترنت.",
-    "فرق": "⚖️ الفرق بينها وبين البيانات العادية:\nالبيانات العادية منظمة وسهلة التخزين في جداول بسيطة، أما الضخمة فهي عشوائية (صوت، فيديو) وتحتاج تقنيات مثل Hadoop لمعالجتها.",
-    "خطر": "🛡️ الأمان الرقمي:\nالبيانات الضخمة تحتاج حماية فائقة؛ لأن تسريبها يهدد الخصوصية. نستخدم التشفير والمواطنة الرقمية لحمايتها من الاختراق."
+    "تعريف": "💡 البيانات الضخمة هي: مجموعات بيانات ضخمة جداً ومعقدة، تعجز الأنظمة التقليدية عن معالجتها.",
+    "خصائص": "📌 الخصائص الأساسية (3Vs):\n\n1. Volume (الحجم)\n2. Velocity (السرعة)\n3. Variety (التنوع).",
+    "خطوات": "👣 خطوات التحليل: 1. الجمع، 2. التخزين، 3. المعالجة، 4. الاستنتاج.",
+    "أهمية": "🌟 الأهمية: تساعد في تحويل المعلومات الخام إلى قرارات ذكية وتوقعات مستقبلية.",
+    "الطب": "🏥 الرعاية الصحية: تُستخدم في توقع الأوبئة والتشخيص الدقيق للأمراض.",
+    "النقل": "🚗 النقل: تحسين حركة المرور وإدارة أنظمة النقل الذكي.",
+    "وظائف": "👨‍💻 الوظائف: محلل بيانات، مهندس بيانات ضخمة، أو خبير ذكاء اصطناعي.",
+    "مصادر": "🌐 المصادر: السوشيال ميديا، سجلات GPS، والمستشعرات الذكية.",
+    "فرق": "⚖️ الفرق: البيانات العادية منظمة وسهلة، أما الضخمة فهي عشوائية وتحتاج تقنيات خاصة.",
+    "خطر": "🛡️ الأمان: يجب حماية البيانات بالتشفير واتباع قوانين المواطنة الرقمية."
 }
 
-# 4. واجهة العرض الرئيسية
+# 4. الواجهة الرئيسية
 st.markdown("<h1>🤖 الوكيل الذكي - Big Data Hero</h1>", unsafe_allow_html=True)
-st.sidebar.title("🎮 التحكم بالوكيل")
-st.sidebar.info("أنا وكيل ذكي صممته دعاء لمساعدتك في فهم البيانات الضخمة داخل رحلتك التعليمية.")
 
-# إضافة زرار العودة للعبة في الجنب (تغيير الرابط برابط لعبتك)
-st.sidebar.markdown("---")
-genially_link = "حطي_رابط_جينالي_هنا"
+# إضافة زرار العودة في الجنب
+st.sidebar.title("🎮 التحكم")
+genially_link = "https://view.genially.com/your-link" # ضعي رابط لعبتك هنا
 st.sidebar.link_button("🔙 العودة إلى اللعبة", genially_link)
 
-# حفظ حالة المحادثة
+# حفظ وعرض الرسائل
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# عرض المحادثة السابقة
 for message in st.session_state.messages:
-    if message["role"] == "user":
-        st.markdown(f'<div class="user-text">👤 أنت: {message["content"]}</div>', unsafe_allow_html=True)
-    else:
-        st.markdown(f'<div class="bot-text">🤖 الوكيل الذكي: {message["content"]}</div>', unsafe_allow_html=True)
-        if "chart_data" in message:
-            if message["chart_type"] == "bar":
-                st.bar_chart(message["chart_data"])
-            elif message["chart_type"] == "area":
-                st.area_chart(message["chart_data"])
+    div_class = "user-text" if message["role"] == "user" else "bot-text"
+    icon = "👤 أنت" if message["role"] == "user" else "🤖 الوكيل"
+    st.markdown(f'<div class="{div_class}">{icon}: {message["content"]}</div>', unsafe_allow_html=True)
+    if "chart" in message:
+        st.bar_chart(message["chart"])
 
-# 5. منطقة الإدخال (السيرش)
-query = st.chat_input("اكتب سؤالك هنا (مثلاً: ما هي الخصائص؟ أو اطلب رسم بياني)... 🤖")
+# 5. نظام البحث والرد
+query = st.chat_input("اكتب سؤالك هنا... 🤖")
 
 if query:
     st.markdown(f'<div class="user-text">👤 أنت: {query}</div>', unsafe_allow_html=True)
     st.session_state.messages.append({"role": "user", "content": query})
-
+    
     response = None
     q_lower = query.lower()
-    msg_data = {"role": "assistant"}
-
-    # بيانات الرسم البياني
-    chart_df = pd.DataFrame({
-        'السنة': ['2010', '2015', '2020', '2025'],
-        'حجم البيانات (Zettabytes)': [2, 15, 45, 175]
-    }).set_index('السنة')
-
-    # نظام الرد الذكي المحدث
-    if "رسم" in q_lower or "بيان" in q_lower or "أشكال" in q_lower:
-        response = "📊 إليك مخطط عمودي يوضح الانفجار الهائل في حجم البيانات عالمياً (بالزيتابايت):"
-        msg_data["chart_data"] = chart_df
-        msg_data["chart_type"] = "bar"
-    elif "غير" in q_lower or "شكل تاني" in q_lower or "مساحي" in q_lower:
-        response = "✅ تم تغيير الشكل! إليك المخطط المساحي النيون الذي يوضح تضاعف البيانات:"
-        msg_data["chart_data"] = chart_df
-        msg_data["chart_type"] = "area"
+    
+    # الرد على الرسم البياني
+    if any(word in q_lower for word in ["رسم", "بيان", "شكل"]):
+        response = "📊 إليك رسم بياني يوضح نمو البيانات عالمياً:"
+        chart_data = pd.DataFrame({'السنة': ['2010', '2020', '2025'], 'حجم البيانات': [2, 45, 175]}).set_index('السنة')
+        st.markdown(f'<div class="bot-text">🤖 الوكيل: {response}</div>', unsafe_allow_html=True)
+        st.bar_chart(chart_data)
+        st.session_state.messages.append({"role": "assistant", "content": response, "chart": chart_data})
     else:
         # البحث في قاعدة البيانات
-        keywords = {
-            "تعريف": ["تعريف", "معنى", "ماهي"],
-            "خصائص": ["خصائص", "مميزات", "v3"],
-            "خطوات": ["خطوات", "مراحل", "كيف"],
-            "أهمية": ["أهمية", "اهميه", "فائدة"],
-            "الطب": ["طب", "صحة", "مستشفى"],
-            "النقل": ["نقل", "مرور", "سيارات"],
-            "وظائف": ["وظيفة", "وظائف", "شغل", "أعمل"],
-            "مصادر": ["
+        for key in knowledge_base:
+            if key in q_lower:
+                response = knowledge_base[key]
+                break
+        
+        if not response:
+            response = "عذراً، اسألني عن (تعريف، خصائص، وظائف، مصادر، أهمية) أو اطلب رسم بياني."
+            
+        st.markdown(f'<div class="bot-text">🤖 الوكيل: {response}</div>', unsafe_allow_html=True)
+        st.session_state.messages.append({"role": "assistant", "content": response})
