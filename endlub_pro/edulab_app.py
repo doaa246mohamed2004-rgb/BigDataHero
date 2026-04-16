@@ -25,7 +25,7 @@ st.markdown("""
         padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 20px;
     }
     .stButton>button { width: 100%; background-color: #00f2ff; color: black; font-weight: bold; border-radius: 10px; border: none; height: 3em; }
-    .stButton>button:hover { background-color: #ffffff; box-shadow: 0 0 20px #00f2ff; }
+    .stButton>button:hover { background-color: #ffffff !important; color: black !important; box-shadow: 0 0 20px #00f2ff; }
     table { width: 100%; color: white; border-collapse: collapse; margin: 10px 0; direction: rtl; }
     th, td { border: 1px solid #30363d; padding: 12px; text-align: center; }
     th { background-color: #00f2ff; color: black; }
@@ -44,7 +44,6 @@ kb = {
 | **النوع** | مهيكلة (جداول) | غير مهيكلة (فيديو، صوت) |
 | **الأدوات** | Excel / SQL | Hadoop / Spark |""",
     "أهمية": "🌟 **أهمية البيانات الضخمة:** تساعد في اتخاذ قرارات ذكية بناءً على حقائق، التنبؤ بالأزمات، وتحسين كفاءة العمل وتقليل التكاليف.",
-    "حياة": "🌍 **في حياتنا:** تستخدم في الصحة (توقع الأوبئة)، التجارة (ترشيحات أمازون)، المدن الذكية (تنظيم المرور)، والترفيه (نتفليكس).",
     "تعليم": "🎓 **في التعليم:** توفر تعلم شخصي لكل طالب، تساعد في توقع الطلاب المتعثرين، وتساعد في تطوير المناهج الدراسية.",
     "roadmap": "🗺️ **خارطة طريق التعلم:**\n1. تعلم Python\n2. تعلم SQL\n3. تحليل البيانات (Pandas)\n4. أدوات الـ Big Data (Hadoop)\n5. الذكاء الاصطناعي."
 }
@@ -69,6 +68,7 @@ if "welcome" not in st.session_state:
 st.sidebar.title("🎮 لوحة التحكم")
 st.sidebar.link_button("🔙 العودة إلى اللعبة", "https://view.genially.com/69c2cab192730eedd4af164e")
 st.sidebar.subheader("📌 اختصارات")
+
 if st.sidebar.button("💡 ما هي البيانات الضخمة؟"): st.session_state.q = "تعريف"
 if st.sidebar.button("⚖️ الفرق بين الأنواع"): st.session_state.q = "فرق"
 if st.sidebar.button("🎓 البيانات في التعليم"): st.session_state.q = "تعليم"
@@ -76,9 +76,10 @@ if st.sidebar.button("🗺️ خارطة الطريق"): st.session_state.q = "r
 if st.sidebar.button("📊 رسم بياني"): st.session_state.q = "رسم"
 if st.sidebar.button("📝 اختبار جديد"): 
     st.session_state.quiz_item = random.choice(quiz_data)
+    st.session_state.quiz_answered = False
     st.session_state.q = "quiz"
 
-# عرض المحادثة
+# عرض المحادثة السابقة
 if "messages" not in st.session_state: st.session_state.messages = []
 for m in st.session_state.messages:
     role = "user-text" if m["role"] == "user" else "bot-text"
@@ -94,19 +95,20 @@ if query:
     if query == "quiz":
         if "quiz_item" not in st.session_state:
             st.session_state.quiz_item = random.choice(quiz_data)
+            st.session_state.quiz_answered = False
         
         item = st.session_state.quiz_item
         st.markdown(f'<div class="bot-text">📝 **سؤال التحدي:** {item["q"]}</div>', unsafe_allow_html=True)
         
-        with st.form("quiz_form"):
-            user_choice = st.radio("اختر الإجابة:", item["a"])
-            submitted = st.form_submit_button("إرسال الإجابة")
-            if submitted:
+        # نظام حل السؤال
+        with st.container():
+            user_choice = st.radio("اختر الإجابة:", item["a"], key="quiz_radio")
+            if st.button("إرسال الإجابة"):
                 if user_choice == item["correct"]:
-                    st.success(item["exp"])
+                    st.success(f"✅ صح! {item['exp']}")
                     st.balloons()
                 else:
-                    st.error(f"❌ خطأ! الإجابة الصح هي: {item['correct']}")
+                    st.error(f"❌ خطأ! الإجابة الصحيحة هي: {item['correct']}")
     
     elif any(word in query.lower() for word in ["رسم", "شكل", "مخطط"]):
         res = "📊 إليك مخطط نمو البيانات العالمي بالزيتابايت:"
@@ -118,12 +120,19 @@ if query:
     else:
         # البحث في قاعدة البيانات
         res = None
-        search_map = {"تعريف": ["تعريف", "ماهي", "ايه هي"], "خصائص": ["خصائص", "5v"], "فرق": ["فرق", "مقارنة"], "تعليم": ["تعليم", "طالب"]}
+        search_map = {
+            "تعريف": ["تعريف", "ماهي", "ايه هي", "البيانات الضخمة"],
+            "خصائص": ["خصائص", "5v", "مميزات"],
+            "فرق": ["فرق", "مقارنة", "تفرق"],
+            "تعليم": ["تعليم", "طالب", "مدرسة"],
+            "roadmap": ["roadmap", "خارطة", "أبدأ"]
+        }
         for cat, keywords in search_map.items():
             if any(k in query.lower() for k in keywords):
                 res = kb[cat]; break
         
-        if not res: res = "عذراً يا بطل، حاول تسأل بشكل أوضح أو استخدم الأزرار!"
+        if not res: res = "عذراً يا بطل، حاول تسأل بشكل أوضح (مثلاً: ما هي خصائص البيانات؟) أو استخدم الأزرار!"
+        
         st.markdown(f'<div class="user-text">👤 أنت: {query}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="bot-text">🤖 الوكيل: {res}</div>', unsafe_allow_html=True)
         st.session_state.messages.append({"role": "user", "content": query})
