@@ -1,11 +1,11 @@
-\import streamlit as st
+import streamlit as st
 import pandas as pd
 import random
 
 # 1. إعدادات الصفحة
 st.set_page_config(page_title="Big Data Hero 🤖📊", layout="wide")
 
-# 2. تصميم أزرق نيون احترافي
+# 2. تصميم نيون أزرق (UI/UX)
 st.markdown("""
     <style>
     .stApp { background-color: #010409; }
@@ -38,20 +38,16 @@ st.markdown("""
         background-color: #00f2ff !important; color: black !important; 
         box-shadow: 0 0 20px #00f2ff; transform: scale(1.02); 
     }
-    
-    table { width: 100%; border-collapse: collapse; background-color: #0d1a26; color: white; border-radius: 10px; margin: 20px 0; }
-    th { background-color: #0066ff; color: white; padding: 15px; }
-    td { border-bottom: 1px solid #30363d; padding: 12px; text-align: center; }
     </style>
     """, unsafe_allow_html=True)
 
 # 3. قاعدة البيانات
 kb = {
-    "تعريف": "بص يا صاحبي، **البيانات الضخمة** دي عاملة زي البحر المالح، كميات مرعبة ومعقدة بتيجي من كل حتة. الفكرة إنها كبيرة لدرجة إن البرامج العادية زي Excel بتستسلم قدامها! 🔍",
-    "خصائص": "ركز معايا في الـ **5V's**:\n1. **الحجم (Volume)**\n2. **السرعة (Velocity)**\n3. **التنوع (Variety)**\n4. **الموثوقية (Veracity)**\n5. **القيمة (Value)** ⚡",
-    "أهمية": "هي 'النفط الجديد'! بتساعدنا نتوقع الأمراض، ونحمي البنوك، ونطور التعليم، ونبني مدن ذكية بتفكر. 💎",
+    "تعريف": "بص يا صاحبي، **البيانات الضخمة** دي عاملة زي البحر المالح، كميات مرعبة ومعقدة بتيجي من كل حتة (سوشيال ميديا، موبايلات). الفكرة إنها كبيرة لدرجة إن البرامج العادية زي Excel بتستسلم قدامها! 🔍",
+    "خصائص": "ركز معايا في الـ **5V's**:\n1. **الحجم (Volume):** داتا بالأطنان.\n2. **السرعة (Velocity):** تدفق لحظي.\n3. **التنوع (Variety):** صور، فيديو، ونصوص.\n4. **الموثوقية (Veracity):** جودة البيانات.\n5. **القيمة (Value):** الفائدة النهائية. ⚡",
+    "أهمية": "هي 'النفط الجديد'! بتساعدنا نتوقع الأمراض، ونحمي البنوك، ونطور التعليم، ونبني مدن ذكية بتفكر. من غيرها إحنا تايهين! 💎",
     "أنواع": "الداتا 3 شلل: **مهيكلة** (جداول)، **غير مهيكلة** (صور وفيديو)، و**شبه مهيكلة** (XML/JSON). 📂",
-    "استخدامات": "في الصحة، التجارة (زي أمازون)، المرور، وحتى في الرياضة لتحليل أداء اللاعبين. 🌍",
+    "استخدامات": "في الصحة، التجارة، المرور، وحتى في الرياضة لتحليل أداء اللاعبين. 🌍",
     "roadmap": "ابدأ بـ **Python**، ثم **SQL**، ثم انطلق لـ **Hadoop** و **Spark**. 🗺️"
 }
 
@@ -68,15 +64,8 @@ if "quiz_feedback" not in st.session_state: st.session_state.quiz_feedback = Non
 if "active_q" not in st.session_state: st.session_state.active_q = random.choice(quiz_data)
 if "view" not in st.session_state: st.session_state.view = "chat"
 
-# 6. الواجهة
+# 6. الواجهة والعنوان
 st.markdown("<h1>🤖 Big Data Hero</h1>", unsafe_allow_html=True)
-
-if "welcome" not in st.session_state:
-    st.markdown(f"""<div class="welcome-box">
-    👋 أهلاً بيك! أنا وكيلك الذكي في عالم البيانات الضخمة.<br>
-    💡 معلومة على الماشي: إحنا بننتج داتا في يوم واحد أكتر من اللي أنتجته البشرية في قرون! جاهز ندوس؟
-    </div>""", unsafe_allow_html=True)
-    st.session_state.welcome = True
 
 # الشريط الجانبي
 with st.sidebar:
@@ -88,13 +77,13 @@ with st.sidebar:
     if st.button("💬 ندردش"):
         st.session_state.view = "chat"
     st.markdown("---")
-    st.subheader("🚀 أسئلة سريعة")
+    st.subheader("🚀 وصول سريع")
     if st.button("🔍 ما هي البيانات الضخمة؟"): st.session_state.q_auto = "تعريف"
     if st.button("⚡ الخصائص (5Vs)"): st.session_state.q_auto = "خصائص"
     if st.button("💎 الأهمية"): st.session_state.q_auto = "أهمية"
     if st.button("📂 الأنواع"): st.session_state.q_auto = "أنواع"
 
-# 7. العرض
+# 7. منطق العرض
 if st.session_state.view == "quiz":
     q_item = st.session_state.active_q
     st.markdown(f'<div class="bot-text">📝 **تحدي الصحاب:** {q_item["q"]}</div>', unsafe_allow_html=True)
@@ -103,42 +92,49 @@ if st.session_state.view == "quiz":
         submitted = st.form_submit_button("إرسال")
         if submitted:
             if user_choice == q_item["correct"]:
-                st.session_state.quiz_feedback = ("success", "يا لعيب! إجابة في الجون.. أنت فعلاً وحش بيانات! 🎯")
+                st.session_state.quiz_feedback = ("success", "يا لعيب! إجابة في الجون! 🎯")
             else:
-                st.session_state.quiz_feedback = ("error", f"لا يا صاحبي مش دي.. الإجابة الصح هي: {q_item['correct']}. حاول تاني!")
+                st.session_state.quiz_feedback = ("error", f"لا يا صاحبي.. الصح هي: {q_item['correct']}")
     if st.session_state.quiz_feedback:
         status, msg = st.session_state.quiz_feedback
         if status == "success": st.success(msg); st.balloons()
         else: st.error(msg)
 else:
-    # الترحيب الآلي في الدردشة
+    # عرض الرسائل
     if not st.session_state.messages:
-        initial_bot_msg = "أهلاً بيك! أنا وكيلك الذكي في عالم البيانات الضخمة. تحب نبدأ بإيه النهاردة؟ 😊"
-        st.session_state.messages.append({"role": "assistant", "content": initial_bot_msg})
-
+        st.markdown('<div class="bot-text">👋 أهلاً بيك! أنا وكيلك الذكي في عالم البيانات الضخمة. اكتب سؤالك هنا أو اطلب رسم بياني! 😊</div>', unsafe_allow_html=True)
+    
     for m in st.session_state.messages:
         role_class = "user-text" if m["role"] == "user" else "bot-text"
         st.markdown(f'<div class="{role_class}">{m["content"]}</div>', unsafe_allow_html=True)
+        if "chart" in m: st.bar_chart(m["chart"])
 
-    # خانة الكتابة مع النص المطلوب
+    # الإدخال
     user_input = st.chat_input("اكتب سؤالك هنا...")
     query = user_input or st.session_state.get("q_auto")
     if "q_auto" in st.session_state: del st.session_state["q_auto"]
 
     if query:
-        res = None
+        res = ""
+        chart_data = None
         q_low = query.lower()
-        if any(w in q_low for w in ["تعريف", "ماهي"]): res = kb["تعريف"]
-        elif any(w in q_low for w in ["خصائص", "5v"]): res = kb["خصائص"]
-        elif any(w in q_low for w in ["أهمية", "لازمتها"]): res = kb["أهمية"]
-        elif any(w in q_low for w in ["نوع", "أنواع"]): res = kb["أنواع"]
-        elif any(w in q_low for w in ["استخدام", "فين"]): res = kb["استخدامات"]
-        elif any(w in q_low for w in ["roadmap", "كيف"]): res = kb["roadmap"]
 
-        if not res: res = "كلامك جامد! بس قولي عاوز تعرف أكتر عن إيه في البيانات الضخمة؟"
+        if any(w in q_low for w in ["تعريف", "ماهي", "ايه هي"]): res = "بص يا سيدي.. " + kb["تعريف"]
+        elif any(w in q_low for w in ["خصائص", "5v"]): res = "دي أهم حتة.. " + kb["خصائص"]
+        elif any(w in q_low for w in ["أهمية", "لازمتها"]): res = "سؤال جامد! " + kb["أهمية"]
+        elif any(w in q_low for w in ["نوع", "انواع"]): res = "بص يا صاحبي، هما 3 أنواع: " + kb["أنواع"]
+        elif any(w in q_low for w in ["رسم", "بياني", "شكل"]):
+            res = "إليك رسم بياني يوضح نمو البيانات عالمياً بالزيتابايت: 📊"
+            chart_data = pd.DataFrame({'السنة': ['2010', '2020', '2025'], 'الحجم': [2, 45, 175]}).set_index('السنة')
+        else:
+            res = "كلامك مثير للاهتمام! أنا هنا عشان ندردش في التعريفات أو الأنواع، تحب تسأل عن إيه؟ 😊"
 
+        # حفظ وعرض فوراً
         st.markdown(f'<div class="user-text">👤 أنت: {query}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="bot-text">🤖 الوكيل: {res}</div>', unsafe_allow_html=True)
+        if chart_data is not None: st.bar_chart(chart_data)
         
+        new_msg = {"role": "assistant", "content": res}
+        if chart_data is not None: new_msg["chart"] = chart_data
         st.session_state.messages.append({"role": "user", "content": query})
-        st.session_state.messages.append({"role": "assistant", "content": res})
+        st.session_state.messages.append(new_msg)
