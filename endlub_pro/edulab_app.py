@@ -24,114 +24,106 @@ st.markdown("""
         background: linear-gradient(90deg, #00f2ff, #0066ff); color: black !important;
         padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 20px;
     }
-    .stButton>button { width: 100%; background-color: #00f2ff; color: black; font-weight: bold; border-radius: 10px; border: none; height: 3em; }
-    .stButton>button:hover { background-color: #ffffff !important; color: black !important; box-shadow: 0 0 20px #00f2ff; }
+    .stButton>button { width: 100%; background-color: #00f2ff; color: black; font-weight: bold; border-radius: 10px; height: 3em; border: none; }
+    .stButton>button:hover { background-color: #ffffff !important; box-shadow: 0 0 20px #00f2ff; }
     table { width: 100%; color: white; border-collapse: collapse; margin: 10px 0; direction: rtl; }
     th, td { border: 1px solid #30363d; padding: 12px; text-align: center; }
     th { background-color: #00f2ff; color: black; }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. قاعدة البيانات الشاملة
+# 3. قاعدة البيانات الشاملة (كل المحتوى العلمي)
 kb = {
-    "تعريف": "🔍 **ما هي البيانات الضخمة؟**\n\nهي مجموعات بيانات كبيرة جداً ومعقدة، بتتولد بسرعة هائلة من مصادر زي السوشيال ميديا والحساسات. الأدوات التقليدية مش بتقدر تعالجها بسهولة بسبب حجمها وسرعتها.",
-    "خصائص": "⚡ **خصائص الـ 5V's الأساسية:**\n\n* **الحجم (Volume):** كميات هائلة بالبيتابايت.\n* **السرعة (Velocity):** تدفق فوري للبيانات.\n* **التنوع (Variety):** نصوص، صور، وفيديو.\n* **الموثوقية (Veracity):** مدى دقة وجودة البيانات.\n* **القيمة (Value):** الفائدة اللي بنطلع بيها بعد التحليل.",
-    "فرق": """⚖️ **مقارنة بين البيانات العادية والضخمة:**
+    "تعريف": "🔍 **ما هي البيانات الضخمة؟**\n\nهي مجموعات بيانات كبيرة ومعقدة، تتولد بسرعة هائلة من مصادر مختلفة. الأدوات التقليدية لا تستطيع التعامل معها بسهولة.",
+    "خصائص": "⚡ **خصائص الـ 5V's:**\n1. **الحجم (Volume)**\n2. **السرعة (Velocity)**\n3. **التنوع (Variety)**\n4. **الموثوقية (Veracity)**\n5. **القيمة (Value)**",
+    "فرق": """⚖️ **الفرق بين البيانات العادية والضخمة:**
 | وجه المقارنة | البيانات العادية | البيانات الضخمة |
 | :--- | :--- | :--- |
-| **الحجم** | صغيرة (جيجابايت) | ضخمة جداً (بيتابايت فأكثر) |
-| **التخزين** | خادم واحد مركزي | موزعة على عدة خوادم |
-| **النوع** | مهيكلة (جداول) | غير مهيكلة (فيديو، صوت) |
-| **الأدوات** | Excel / SQL | Hadoop / Spark |""",
-    "أهمية": "🌟 **أهمية البيانات الضخمة:** تساعد في اتخاذ قرارات ذكية بناءً على حقائق، التنبؤ بالأزمات، وتحسين كفاءة العمل وتقليل التكاليف.",
-    "تعليم": "🎓 **في التعليم:** توفر تعلم شخصي لكل طالب، تساعد في توقع الطلاب المتعثرين، وتساعد في تطوير المناهج الدراسية.",
-    "roadmap": "🗺️ **خارطة طريق التعلم:**\n1. تعلم Python\n2. تعلم SQL\n3. تحليل البيانات (Pandas)\n4. أدوات الـ Big Data (Hadoop)\n5. الذكاء الاصطناعي."
+| **الحجم** | جيجابايت | بيتابايت فأكثر |
+| **التخزين** | خادم واحد | خوادم موزعة |
+| **النوع** | مهيكلة (جداول) | غير مهيكلة (صور/فيديو) |""",
+    "استخدامات": "🌍 **استخدامات البيانات الضخمة في حياتنا:**\n- **الصحة:** تشخيص الأمراض وتوقع الأوبئة.\n- **التجارة:** ترشيح المنتجات (مثل أمازون).\n- **المدن الذكية:** تنظيم المرور وتوفير الطاقة.\n- **الترفيه:** اقتراحات يوتيوب ونتفليكس.",
+    "تعليم": "🎓 **البيانات الضخمة في التعليم:**\n- **تعلم شخصي:** محتوى يناسب كل طالب.\n- **تحسين النتائج:** مساعدة الطلاب المعرضين للرسوب.\n- **تطوير المناهج:** اكتشاف الأجزاء الصعبة وتعديلها.",
+    "وظائف": "💼 **الوظائف المتاحة:**\n- محلل بيانات (Data Analyst).\n- عالم بيانات (Data Scientist).\n- مهندس بيانات ضخمة (Big Data Engineer).",
+    "منصات": "🚀 **مواقع للتعلم:**\n- Coursera, Udacity, EdX, Kaggle, Datacamp.",
+    "roadmap": "🗺️ **خارطة طريق التعلم:**\n1. Python\n2. SQL\n3. Pandas & NumPy\n4. Hadoop & Spark\n5. AI Models"
 }
 
-# 4. نظام الأسئلة المطور
+# 4. نظام الأسئلة المطور (في صميم المحتوى)
 quiz_data = [
-    {"q": "أي خاصية تعني سرعة إنتاج وتدفق البيانات؟", "a": ["Volume", "Velocity", "Variety"], "correct": "Velocity", "exp": "صح! Velocity هي السرعة."},
-    {"q": "البيانات الضخمة تُخزن في:", "a": ["خادم واحد", "خوادم موزعة", "فلاش ميموري"], "correct": "خوادم موزعة", "exp": "برافو! التخزين الموزع Distributed هو الأساس."},
-    {"q": "أي أداة تستخدم للبيانات الضخمة وليس العادية؟", "a": ["Excel", "Word", "Apache Spark"], "correct": "Apache Spark", "exp": "ممتاز! Spark مخصص للبيانات الضخمة."},
-    {"q": "البيانات غير المهيكلة تعني:", "a": ["جداول منظمّة", "صور وفيديوهات", "ملفات Excel"], "correct": "صور وفيديوهات", "exp": "صحيح! الصور والفيديو بيانات غير منظمة."},
-    {"q": "خاصية Veracity تعني:", "a": ["حجم البيانات", "دقة وموثوقية البيانات", "تنوع المصادر"], "correct": "دقة وموثوقية البيانات", "exp": "تمام! هي التأكد من صحة المعلومة."}
+    {"q": "أي خاصية تعبر عن 'تنوع' أشكال البيانات (صور، نصوص، فيديو)؟", "a": ["Variety", "Volume", "Value"], "correct": "Variety"},
+    {"q": "تُخزن البيانات الضخمة في خوادم:", "a": ["مركزية (واحد)", "موزعة (Distributed)", "فلاش ميموري"], "correct": "موزعة (Distributed)"},
+    {"q": "من استخدامات البيانات الضخمة في التجارة الإلكترونية:", "a": ["ترشيح المنتجات", "كتابة المقالات", "تعديل الصور"], "correct": "ترشيح المنتجات"}
 ]
 
-# 5. الواجهة والتحكم
+# 5. إدارة الحالة (Session State)
+if "messages" not in st.session_state: st.session_state.messages = []
+if "quiz_feedback" not in st.session_state: st.session_state.quiz_feedback = None
+if "active_q" not in st.session_state: st.session_state.active_q = random.choice(quiz_data)
+
+# 6. الواجهة والتحكم
 st.markdown("<h1>🤖 الوكيل الذكي - Big Data Hero</h1>", unsafe_allow_html=True)
 
 if "welcome" not in st.session_state:
     st.markdown("""<div class="welcome-box">👋 مرحبا! أنا وكيلك الذكي في عالم البيانات الضخمة.<br>💡 هل تعلم أن 90% من بيانات العالم تم إنتاجها في آخر سنتين فقط؟</div>""", unsafe_allow_html=True)
     st.session_state.welcome = True
 
-# Sidebar
-st.sidebar.title("🎮 لوحة التحكم")
-st.sidebar.link_button("🔙 العودة إلى اللعبة", "https://view.genially.com/69c2cab192730eedd4af164e")
-st.sidebar.subheader("📌 اختصارات")
+# الشريط الجانبي (Sidebar)
+st.sidebar.title("🎮 التحكم")
+if st.sidebar.button("📝 اختبر معلوماتك"):
+    st.session_state.active_q = random.choice(quiz_data)
+    st.session_state.quiz_feedback = None
+    st.session_state.view = "quiz"
 
-if st.sidebar.button("💡 ما هي البيانات الضخمة؟"): st.session_state.q = "تعريف"
-if st.sidebar.button("⚖️ الفرق بين الأنواع"): st.session_state.q = "فرق"
-if st.sidebar.button("🎓 البيانات في التعليم"): st.session_state.q = "تعليم"
-if st.sidebar.button("🗺️ خارطة الطريق"): st.session_state.q = "roadmap"
-if st.sidebar.button("📊 رسم بياني"): st.session_state.q = "رسم"
-if st.sidebar.button("📝 اختبار جديد"): 
-    st.session_state.quiz_item = random.choice(quiz_data)
-    st.session_state.quiz_answered = False
-    st.session_state.q = "quiz"
+if st.sidebar.button("🏠 العودة للمحادثة"): st.session_state.view = "chat"
 
-# عرض المحادثة السابقة
-if "messages" not in st.session_state: st.session_state.messages = []
-for m in st.session_state.messages:
-    role = "user-text" if m["role"] == "user" else "bot-text"
-    st.markdown(f'<div class="{role}">{m["content"]}</div>', unsafe_allow_html=True)
-    if "chart" in m: st.bar_chart(m["chart"])
+st.sidebar.subheader("📌 اختصارات سريعة")
+if st.sidebar.button("💡 ما هي البيانات الضخمة؟"): st.session_state.q_auto = "تعريف"
+if st.sidebar.button("🌍 الاستخدامات"): st.session_state.q_auto = "استخدامات"
+if st.sidebar.button("🗺️ خارطة الطريق"): st.session_state.q_auto = "roadmap"
 
-# 6. منطق السؤال والرد
-input_q = st.chat_input("اسألني أي سؤال... 🤖")
-query = input_q or st.session_state.get("q")
-if "q" in st.session_state: del st.session_state["q"]
-
-if query:
-    if query == "quiz":
-        if "quiz_item" not in st.session_state:
-            st.session_state.quiz_item = random.choice(quiz_data)
-            st.session_state.quiz_answered = False
-        
-        item = st.session_state.quiz_item
-        st.markdown(f'<div class="bot-text">📝 **سؤال التحدي:** {item["q"]}</div>', unsafe_allow_html=True)
-        
-        # نظام حل السؤال
-        with st.container():
-            user_choice = st.radio("اختر الإجابة:", item["a"], key="quiz_radio")
-            if st.button("إرسال الإجابة"):
-                if user_choice == item["correct"]:
-                    st.success(f"✅ صح! {item['exp']}")
-                    st.balloons()
-                else:
-                    st.error(f"❌ خطأ! الإجابة الصحيحة هي: {item['correct']}")
+# 7. منطق العرض (اختبار أم محادثة)
+if st.session_state.get("view") == "quiz":
+    # عرض قسم الاختبار
+    q_item = st.session_state.active_q
+    st.markdown(f'<div class="bot-text">📝 سؤال: {q_item["q"]}</div>', unsafe_allow_html=True)
     
-    elif any(word in query.lower() for word in ["رسم", "شكل", "مخطط"]):
-        res = "📊 إليك مخطط نمو البيانات العالمي بالزيتابايت:"
-        df = pd.DataFrame({'السنة': ['2010', '2020', '2025'], 'الحجم': [2, 45, 175]}).set_index('السنة')
-        st.markdown(f'<div class="bot-text">🤖 الوكيل: {res}</div>', unsafe_allow_html=True)
-        st.bar_chart(df)
-        st.session_state.messages.append({"role": "assistant", "content": res, "chart": df})
+    with st.container():
+        user_choice = st.radio("اختر الإجابة الصحيحة:", q_item["a"], key="r_quiz")
+        if st.button("إرسال الإجابة"):
+            if user_choice == q_item["correct"]:
+                st.session_state.quiz_feedback = ("success", "✅ إجابة صحيحة! بطل البيانات.")
+            else:
+                st.session_state.quiz_feedback = ("error", f"❌ خطأ! الإجابة الصح هي: {q_item['correct']}")
     
-    else:
-        # البحث في قاعدة البيانات
+    if st.session_state.quiz_feedback:
+        status, msg = st.session_state.quiz_feedback
+        if status == "success": st.success(msg); st.balloons()
+        else: st.error(msg)
+else:
+    # عرض المحادثة
+    for m in st.session_state.messages:
+        role = "user-text" if m["role"] == "user" else "bot-text"
+        st.markdown(f'<div class="{role}">{m["content"]}</div>', unsafe_allow_html=True)
+
+    user_input = st.chat_input("اسألني عن الاستخدامات، التعريف، أو الوظائف...")
+    query = user_input or st.session_state.get("q_auto")
+    if "q_auto" in st.session_state: del st.session_state["q_auto"]
+
+    if query:
         res = None
-        search_map = {
-            "تعريف": ["تعريف", "ماهي", "ايه هي", "البيانات الضخمة"],
-            "خصائص": ["خصائص", "5v", "مميزات"],
-            "فرق": ["فرق", "مقارنة", "تفرق"],
-            "تعليم": ["تعليم", "طالب", "مدرسة"],
-            "roadmap": ["roadmap", "خارطة", "أبدأ"]
-        }
-        for cat, keywords in search_map.items():
-            if any(k in query.lower() for k in keywords):
-                res = kb[cat]; break
+        # منطق البحث الذكي (Keyword Matching)
+        q_low = query.lower()
+        if any(w in q_low for w in ["تعريف", "ماهي", "ايه هي"]): res = kb["تعريف"]
+        elif any(w in q_low for w in ["خصائص", "مميزات", "5v"]): res = kb["خصائص"]
+        elif any(w in q_low for w in ["فرق", "مقارنة", "تفرق"]): res = kb["فرق"]
+        elif any(w in q_low for w in ["استخدامات", "فين", "حياة", "نعمل بيها ايه"]): res = kb["استخدامات"]
+        elif any(w in q_low for w in ["تعليم", "طالب", "مدرسة"]): res = kb["تعليم"]
+        elif any(w in q_low for w in ["وظيفة", "شغل", "أشتغل"]): res = kb["وظائف"]
+        elif any(w in q_low for w in ["تعلم", "كورس", "موقع"]): res = kb["منصات"]
+        elif any(w in q_low for w in ["roadmap", "خطة", "أبدأ"]): res = kb["roadmap"]
         
-        if not res: res = "عذراً يا بطل، حاول تسأل بشكل أوضح (مثلاً: ما هي خصائص البيانات؟) أو استخدم الأزرار!"
+        if not res: res = "معلومة شيقة! اسألني أكتر عن استخدامات البيانات أو خصائصها."
         
         st.markdown(f'<div class="user-text">👤 أنت: {query}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="bot-text">🤖 الوكيل: {res}</div>', unsafe_allow_html=True)
