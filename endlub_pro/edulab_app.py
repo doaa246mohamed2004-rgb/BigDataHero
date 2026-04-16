@@ -38,24 +38,52 @@ st.markdown("""
         background-color: #00f2ff !important; color: black !important; 
         box-shadow: 0 0 20px #00f2ff; transform: scale(1.02); 
     }
+
+    /* تنسيق الجداول لتناسب ستايل النيون */
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; color: white; }
+    th { background-color: #0066ff; color: white; padding: 10px; text-align: center; }
+    td { border: 1px solid #30363d; padding: 10px; text-align: center; }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. قاعدة البيانات
+# 3. قاعدة البيانات الشاملة (المحتوى المضاف)
 kb = {
-    "تعريف": "بص يا صاحبي، **البيانات الضخمة** دي عاملة زي البحر المالح، كميات مرعبة ومعقدة بتيجي من كل حتة (سوشيال ميديا، موبايلات). الفكرة إنها كبيرة لدرجة إن البرامج العادية زي Excel بتستسلم قدامها! 🔍",
-    "خصائص": "ركز معايا في الـ **5V's**:\n1. **الحجم (Volume):** داتا بالأطنان.\n2. **السرعة (Velocity):** تدفق لحظي.\n3. **التنوع (Variety):** صور، فيديو، ونصوص.\n4. **الموثوقية (Veracity):** جودة البيانات.\n5. **القيمة (Value):** الفائدة النهائية. ⚡",
-    "أهمية": "هي 'النفط الجديد'! بتساعدنا نتوقع الأمراض، ونحمي البنوك، ونطور التعليم، ونبني مدن ذكية بتفكر. من غيرها إحنا تايهين! 💎",
-    "أنواع": "الداتا 3 شلل: **مهيكلة** (جداول)، **غير مهيكلة** (صور وفيديو)، و**شبه مهيكلة** (XML/JSON). 📂",
-    "استخدامات": "في الصحة، التجارة، المرور، وحتى في الرياضة لتحليل أداء اللاعبين. 🌍",
-    "roadmap": "ابدأ بـ **Python**، ثم **SQL**، ثم انطلق لـ **Hadoop** و **Spark**. 🗺️"
+    "تعريف": "بص يا بطل، **البيانات الضخمة** دي عالم تاني! هي مجموعات بيانات هائلة ومعقدة بتيجي من كل حتة، والبرامج العادية بتعجز قدامها. 🔍",
+    
+    "خصائص": "ركز معايا في الـ **5V's**:\n1. **الحجم (Volume):** داتا بالأطنان.\n2. **السرعة (Velocity):** تدفق لحظي.\n3. **التنوع (Variety):** صور وفيديو ونصوص.\n4. **الموثوقية (Veracity):** جودة ودقة البيانات.\n5. **القيمة (Value):** الفائدة اللي بنطلع بيها. ⚡",
+    
+    "أهمية": "هي 'النفط الجديد'! بتساعدنا نتوقع الأمراض، ونحمي البنوك من الاحتيال، ونبني مدن ذكية بتوفر طاقة. 💎",
+    
+    "أنواع": "الداتا 3 أنواع: **مهيكلة** (جداول)، **غير مهيكلة** (صور وفيديو)، و**شبه مهيكلة** (XML/JSON). 📂",
+    
+    "roadmap": """🗺️ **خارطة الطريق لدخول المجال:**
+1. **تعلم لغة برمجة:** ابدأ بـ **Python** فهي الأفضل.
+2. **قواعد البيانات:** تعلم **SQL** للبيانات المنظمة و **NoSQL** للضخمة.
+3. **الرياضيات والإحصاء:** عشان تفهم تحليل البيانات صح.
+4. **أدوات المجال:** اتعلم **Hadoop** للتخزين و **Spark** للمعالجة.
+5. **تحليل البيانات:** اتقن أدوات العرض زي **Tableau** أو **Power BI**.""",
+
+    "مراحل": """⚙️ **مراحل تجميع ومعالجة البيانات:**
+1. **التجميع (Ingestion):** سحب البيانات من المواقع والتطبيقات.
+2. **التخزين (Storage):** وضعها في مستودعات زي **Data Lakes**.
+3. **المعالجة (Processing):** تنظيف وترتيب البيانات باستخدام **Spark**.
+4. **التحليل (Analysis):** استخراج الأنماط والتوقعات.
+5. **العرض (Visualization):** تقديم النتائج في رسوم بيانية.""",
+
+    "مقارنة": """⚖️ **الفرق بين البيانات العادية والضخمة:**
+| وجه المقارنة | البيانات العادية | البيانات الضخمة |
+| :--- | :--- | :--- |
+| **الحجم** | جيجابايت (محدودة) | تيرابايت وأكثر |
+| **البنية** | مهيكلة (جداول) | متنوعة (صور/نصوص) |
+| **المعالجة** | مركزية (جهاز واحد) | موزعة (عدة خوادم) |
+| **الأدوات** | SQL, Excel | Hadoop, Spark |"""
 }
 
 # 4. نظام الأسئلة
 quiz_data = [
     {"q": "إيه هي الـ V اللي بتعبر عن إن الداتا صور وفيديوهات ونصوص؟", "a": ["Variety (التنوع)", "Volume (الحجم)", "Value (القيمة)"], "correct": "Variety (التنوع)"},
-    {"q": "بيانات السوشيال ميديا تعتبر بيانات:", "a": ["مهيكلة", "غير مهيكلة", "شبه مهيكلة"], "correct": "غير مهيكلة"},
-    {"q": "ليه بنقول على البيانات الضخمة إنها 'النفط الجديد'؟", "a": ["عشان لونها أسود", "عشان قيمتها العالية في استخراج المعلومات", "عشان بتشغل العربيات"], "correct": "عشان قيمتها العالية في استخراج المعلومات"}
+    {"q": "المرحلة اللي بيتم فيها تنظيف البيانات وترتيبها تسمى:", "a": ["التخزين", "المعالجة", "التجميع"], "correct": "المعالجة"},
+    {"q": "أي أداة تستخدم للبيانات العادية والجداول البسيطة؟", "a": ["Hadoop", "Excel", "Apache Spark"], "correct": "Excel"}
 ]
 
 # 5. إدارة الحالة
@@ -64,12 +92,11 @@ if "quiz_feedback" not in st.session_state: st.session_state.quiz_feedback = Non
 if "active_q" not in st.session_state: st.session_state.active_q = random.choice(quiz_data)
 if "view" not in st.session_state: st.session_state.view = "chat"
 
-# 6. الواجهة والعنوان
+# 6. الواجهة
 st.markdown("<h1>🤖 Big Data Hero</h1>", unsafe_allow_html=True)
 
-# الشريط الجانبي
 with st.sidebar:
-    st.title("⚙️ الإعدادات")
+    st.title("⚙️ الوكيل الذكي")
     if st.button("📝 اختبر نفسك"):
         st.session_state.active_q = random.choice(quiz_data)
         st.session_state.quiz_feedback = None
@@ -79,38 +106,36 @@ with st.sidebar:
     st.markdown("---")
     st.subheader("🚀 وصول سريع")
     if st.button("🔍 ما هي البيانات الضخمة؟"): st.session_state.q_auto = "تعريف"
-    if st.button("⚡ الخصائص (5Vs)"): st.session_state.q_auto = "خصائص"
-    if st.button("💎 الأهمية"): st.session_state.q_auto = "أهمية"
-    if st.button("📂 الأنواع"): st.session_state.q_auto = "أنواع"
+    if st.button("🗺️ خارطة الطريق (Roadmap)"): st.session_state.q_auto = "roadmap"
+    if st.button("⚖️ مقارنة البيانات"): st.session_state.q_auto = "مقارنة"
+    if st.button("⚙️ مراحل المعالجة"): st.session_state.q_auto = "مراحل"
 
 # 7. منطق العرض
 if st.session_state.view == "quiz":
     q_item = st.session_state.active_q
-    st.markdown(f'<div class="bot-text">📝 **تحدي الصحاب:** {q_item["q"]}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="bot-text">📝 **تحدي الأبطال:** {q_item["q"]}</div>', unsafe_allow_html=True)
     with st.form("quiz_form"):
-        user_choice = st.radio("ها.. تفتكر إيه الإجابة؟", q_item["a"])
+        user_choice = st.radio("تفتكر إيه الإجابة؟", q_item["a"])
         submitted = st.form_submit_button("إرسال")
         if submitted:
             if user_choice == q_item["correct"]:
-                st.session_state.quiz_feedback = ("success", "يا لعيب! إجابة في الجون! 🎯")
+                st.session_state.quiz_feedback = ("success", "يا لعيب! إجابة صحيحة عبقرية! 🎯")
             else:
-                st.session_state.quiz_feedback = ("error", f"لا يا صاحبي.. الصح هي: {q_item['correct']}")
+                st.session_state.quiz_feedback = ("error", f"حاول تاني يا بطل! الصح هي: {q_item['correct']}")
     if st.session_state.quiz_feedback:
         status, msg = st.session_state.quiz_feedback
         if status == "success": st.success(msg); st.balloons()
         else: st.error(msg)
 else:
-    # عرض الرسائل
     if not st.session_state.messages:
-        st.markdown('<div class="bot-text">👋 أهلاً بيك! أنا وكيلك الذكي في عالم البيانات الضخمة. اكتب سؤالك هنا أو اطلب رسم بياني! 😊</div>', unsafe_allow_html=True)
+        st.markdown('<div class="bot-text">👋 أهلاً بيك! أنا وكيلك الذكي. جاهز تكتشف مراحل معالجة البيانات الضخمة أو تاخد الـ Roadmap؟ 😊</div>', unsafe_allow_html=True)
     
     for m in st.session_state.messages:
         role_class = "user-text" if m["role"] == "user" else "bot-text"
         st.markdown(f'<div class="{role_class}">{m["content"]}</div>', unsafe_allow_html=True)
         if "chart" in m: st.bar_chart(m["chart"])
 
-    # الإدخال
-    user_input = st.chat_input("اكتب سؤالك هنا...")
+    user_input = st.chat_input("اكتب سؤالك هنا (عن الطريق، الفرق، أو المراحل)...")
     query = user_input or st.session_state.get("q_auto")
     if "q_auto" in st.session_state: del st.session_state["q_auto"]
 
@@ -119,22 +144,22 @@ else:
         chart_data = None
         q_low = query.lower()
 
-        if any(w in q_low for w in ["تعريف", "ماهي", "ايه هي"]): res = "بص يا سيدي.. " + kb["تعريف"]
-        elif any(w in q_low for w in ["خصائص", "5v"]): res = "دي أهم حتة.. " + kb["خصائص"]
-        elif any(w in q_low for w in ["أهمية", "لازمتها"]): res = "سؤال جامد! " + kb["أهمية"]
-        elif any(w in q_low for w in ["نوع", "انواع"]): res = "بص يا صاحبي، هما 3 أنواع: " + kb["أنواع"]
-        elif any(w in q_low for w in ["رسم", "بياني", "شكل"]):
-            res = "إليك رسم بياني يوضح نمو البيانات عالمياً بالزيتابايت: 📊"
+        if any(w in q_low for w in ["تعريف", "ماهي"]): res = kb["تعريف"]
+        elif any(w in q_low for w in ["roadmap", "طريق", "كيف ابدأ"]): res = kb["roadmap"]
+        elif any(w in q_low for w in ["فرق", "مقارنة"]): res = kb["مقارنة"]
+        elif any(w in q_low for w in ["مراحل", "خطوات", "تجميع"]): res = kb["مراحل"]
+        elif any(w in q_low for w in ["خصائص", "5v"]): res = kb["خصائص"]
+        elif any(w in q_low for w in ["رسم", "بياني"]):
+            res = "إليك نمو البيانات عالمياً: 📊"
             chart_data = pd.DataFrame({'السنة': ['2010', '2020', '2025'], 'الحجم': [2, 45, 175]}).set_index('السنة')
         else:
-            res = "كلامك مثير للاهتمام! أنا هنا عشان ندردش في التعريفات أو الأنواع، تحب تسأل عن إيه؟ 😊"
+            res = "كلامك جامد! اسألني عن الـ Roadmap أو مراحل المعالجة أو الفرق بين أنواع البيانات. 😊"
 
-        # حفظ وعرض فوراً
         st.markdown(f'<div class="user-text">👤 أنت: {query}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="bot-text">🤖 الوكيل: {res}</div>', unsafe_allow_html=True)
         if chart_data is not None: st.bar_chart(chart_data)
         
+        st.session_state.messages.append({"role": "user", "content": query})
         new_msg = {"role": "assistant", "content": res}
         if chart_data is not None: new_msg["chart"] = chart_data
-        st.session_state.messages.append({"role": "user", "content": query})
         st.session_state.messages.append(new_msg)
