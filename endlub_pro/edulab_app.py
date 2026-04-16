@@ -123,7 +123,7 @@ if st.session_state.view == "quiz":
 else:
     # الترحيب الأولي
     if not st.session_state.messages:
-        st.markdown('<div class="bot-text">👋 أهلاً بيك يا بطل! أنا وكيلك الذكي في عالم البيانات الضخمة. تحب نبدأ بالـ Roadmap ولا نعرف إيه هي الـ 5V\'s؟ أنا معاك! 😊</div>', unsafe_allow_html=True)
+        st.markdown('<div class="bot-text">👋 أهلاً بيك يا بطل! أنا وكيلك الذكي في عالم البيانات الضخمة.   😊</div>', unsafe_allow_html=True)
     
     # عرض تاريخ المحادثة
     for m in st.session_state.messages:
