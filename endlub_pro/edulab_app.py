@@ -19,25 +19,19 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. قاعدة البيانات المطورة (أسئلة المناقشة والاحتمالات)
+# 3. قاعدة البيانات الشاملة (Knowledge Base)
 kb = {
-    "تعريف": "البيانات الضخمة هي عبارة عن كميات هائلة من المعلومات بتيجي بسرعة رهيبة ومن مصادر متنوعة، والكمبيوترات العادية مش بتقدر تعالجها، فبنحتاج تكنولوجيا خاصة عشان نفهمها ونطلع منها فوائد. 🔍",
-    "خصائص": "بتتميز بـ 5 حاجات أساسية (5Vs): \n1. **الحجم (Volume):** كميات داتا ضخمة.\n2. **السرعة (Velocity):** الداتا بتتحرك بسرعة اللحظة.\n3. **التنوع (Variety):** صور، فيديوهات، ونصوص.\n4. **الموثوقية (Veracity):** التأكد إن الداتا صحيحة.\n5. **القيمة (Value):** تحويل الداتا لقرار مفيد. ⚡",
-    "مجالات_كاملة": """البيانات الضخمة موجودة في كل مكان:
-- **في الطب:** تشخيص الأمراض مبكراً وتطوير الأدوية. 🏥
-- **في التعليم:** التعلم الشخصي وتحليل مستوى الطلاب. 🎓
-- **في المرور:** تحليل الزحام عبر GPS وتوفير الوقت. 🚗
-- **في التجارة:** توقع احتياجات الزبائن وتحسين المبيعات. 🛒""",
-    "استفادة": "لما تتعلم بيج داتا، هتقدر تشتغل في وظائف المستقبل بمرتبات مرتفعة، وتنمي مهارات حل المشكلات واتخاذ قرارات مبنية على الحقائق. 🌟",
-    "مقارنة": "الفرق الجوهري: البيانات العادية حجمها صغير وتتخزن في ملف Excel، لكن البيانات الضخمة هائلة وموزعة عبر آلاف الأجهزة ولا يمكن فتحها بالبرامج التقليدية. ⚖️",
-    "تغيير_الحياة": "بتغير حياتنا لأنها بتخلي الخدمات أسرع وأذكى، المدن بتبقى 'مدن ذكية' بتوفر كهرباء ومية، والرعاية الصحية بتبقى أدق. 🚀",
-    "وظائف": "تقدر تشتغل: عالم بيانات (Data Scientist)، مهندس بيانات (Data Engineer)، أو محلل بيانات (Data Analyst). 💼",
-    "برامج": "أهم الأدوات: Hadoop و Apache Spark لمعالجة الداتا، وقواعد بيانات NoSQL، ولغات Python و R. 💻",
-    "أمن_خصوصية": "سؤال مهم! أمن البيانات الضخمة بيعتمد على التشفير (Encryption) وقوانين حماية الخصوصية زي (GDPR) عشان نضمن إن بيانات الناس مش بتتسرب أو تُستخدم غلط. 🛡️",
-    "تخزين": "البيانات الضخمة مش بتتخزن في هارد ديسك واحد، بنستخدم حاجة اسمها 'التخزين الموزع' (Distributed Storage) زي نظام (HDFS)، وده بيسمح بتخزين الداتا على أجهزة كتير في نفس الوقت. 📦",
-    "ذكاء_اصطناعي": "العلاقة قوية جداً! البيانات الضخمة هي 'الغذاء' للذكاء الاصطناعي؛ كل ما زادت البيانات، زادت قدرة الـ AI على التعلم واتخاذ قرارات أدق. 🤖",
-    "تحديات": "أكبر التحديات هي: نقص الخبرات البشرية، تكلفة التخزين العالية، وضمان جودة الداتا (تكون نضيفة ومن غير أخطاء). ⚠️",
-    "هدف": "هدفنا في 'Big Data Hero' إننا نحولك لـ 'بطل' فاهم إزاي البيانات بتدير العالم وبتحل مشاكله! 🎮"
+    "تعريف": "البيانات الضخمة هي مجموعات بيانات هائلة ومعقدة تفوق قدرة البرامج التقليدية على المعالجة، وتتميز بسرعة تدفقها وتنوعها. 🔍",
+    "خصائص": "تتميز بـ 5Vs: الحجم (Volume)، السرعة (Velocity)، التنوع (Variety)، الموثوقية (Veracity)، والقيمة (Value). ⚡",
+    "استفادة_تعلم": "هتستفاد إيه؟ \n1. وظائف بمرتبات عالية (أعلى الرواتب تقنياً).\n2. القدرة على توقع المستقبل وبناء أنظمة ذكية.\n3. حل مشاكل معقدة في الطب والصناعة والبيئة. 🌟",
+    "أدوات_تعلم": "أهم الأدوات هي: لغة Python، نظام Hadoop للتخزين الموزع، Apache Spark للمعالجة السريعة، وقواعد بيانات NoSQL. 💻",
+    "خطوات_تعلم": "ابدأ بـ: \n1. تعلم لغة Python.\n2. افهم أساسيات الإحصاء.\n3. ادرس تقنيات تخزين الداتا (SQL & NoSQL).\n4. تعلم أدوات المعالجة الضخمة (Spark). 🚀",
+    "ترتيب_تجميع": "دورة حياة البيانات: \n1. **التجميع (Collection):** من المصادر المختلفة.\n2. **التخزين (Storage):** في أنظمة موزعة.\n3. **المعالجة (Processing):** تنظيف وترتيب الداتا.\n4. **التحليل (Analysis):** استخراج الأنماط.\n5. **التصور (Visualization):** عرضها في رسوم بيانية. 📊",
+    "تغيير_الحياة": "بتغير حياتنا عن طريق: تشخيص الأمراض مبكراً، تقليل زحام المرور بالخرائط الذكية، توفير استهلاك الطاقة، وحتى تحسين تجربة التسوق والترفيه. 🌍",
+    "استفادة_اللعبة": "بعد ما تلعب 'بطل البيانات الضخمة'، هتكون فهمت إزاي تحول الأرقام لمعلومات مفيدة، وقدرت تواجه تحديات حقيقية بيواجهها مهندسين البيانات في العالم الواقعي! 🎮",
+    "أمن_خصوصية": "تعتمد على التشفير القوي وقوانين صارمة (مثل GDPR) لحماية بيانات المستخدمين من الاختراق أو الاستخدام غير القانوني. 🛡️",
+    "ذكاء_اصطناعي": "البيانات الضخمة هي المحرك الأساسي للذكاء الاصطناعي؛ فبدون بيانات ضخمة، لا يمكن للـ AI أن يتعلم أو يتطور. 🤖",
+    "مجالات": "تستخدم في الطب، التعليم، الفضاء، البنوك، والمدن الذكية لتسهيل حياة البشر. 🏥🎓🚗"
 }
 
 # 4. إدارة الجلسة
@@ -49,8 +43,8 @@ if "not_found" not in st.session_state:
     st.session_state.not_found = False
 
 quiz_data = [
-    {"q": "أي نظام يستخدم لتخزين البيانات الضخمة بشكل موزع؟", "a": ["HDFS", "Flash Memory"], "correct": "HDFS"},
-    {"q": "ما هو 'غذاء' الذكاء الاصطناعي الأساسي؟", "a": ["البيانات الضخمة", "البطاريات"], "correct": "البيانات الضخمة"}
+    {"q": "أي مرحلة تأتي أولاً في التعامل مع البيانات؟", "a": ["التجميع", "التحليل"], "correct": "التجميع"},
+    {"q": "هل لغة Python مهمة لتعلم البيانات الضخمة؟", "a": ["نعم", "لا"], "correct": "نعم"}
 ]
 
 # 5. الواجهة الأساسية
@@ -67,12 +61,12 @@ with st.sidebar:
     
     st.markdown("---")
     st.subheader("🚀 وصول سريع")
-    if st.button("🔍 التعريف والفرق"): st.session_state.q_auto = "فرق"
-    if st.button("⚡ الخصائص والأهمية"): st.session_state.q_auto = "خصائص"
-    if st.button("🌍 المجالات الشاملة"): st.session_state.q_auto = "مجالات"
-    if st.button("🛡️ الأمن والخصوصية"): st.session_state.q_auto = "أمن"
-    if st.button("🤖 والذكاء الاصطناعي"): st.session_state.q_auto = "ذكاء"
-    if st.button("📊 رسم بياني للنمو"): st.session_state.q_auto = "رسم"
+    if st.button("🔍 التعريف والخصائص"): st.session_state.q_auto = "تعريف"
+    if st.button("📈 خطوات وأدوات التعلم"): st.session_state.q_auto = "تعلم"
+    if st.button("📊 دورة حياة البيانات"): st.session_state.q_auto = "ترتيب"
+    if st.button("🌍 تأثيرها على حياتنا"): st.session_state.q_auto = "تغيير"
+    if st.button("🛡️ الأمن والذكاء"): st.session_state.q_auto = "أمن"
+    if st.button("🎮 فائدة اللعبة"): st.session_state.q_auto = "لعبة"
 
 # 6. منطق العرض
 if st.session_state.view == "quiz":
@@ -81,61 +75,54 @@ if st.session_state.view == "quiz":
     with st.form("quiz"):
         choice = st.radio("الإجابة:", q_item["a"])
         if st.form_submit_button("إرسال"):
-            if choice == q_item["correct"]: st.success("صح! 🎯")
-            else: st.error("حاول تاني!")
+            if choice == q_item["correct"]: st.success("بطل! إجابة صحيحة 🎯")
+            else: st.error("فكر مرة ثانية!")
 else:
     if not st.session_state.messages:
-        st.markdown('<div class="bot-text">مرحباً بك! أنا وكيلك الذكي لمشروع "Big Data Hero". جاهز للرد على أسئلة المناقشة وكل ما يخص عالم البيانات! 😊</div>', unsafe_allow_html=True)
+        st.markdown('<div class="bot-text">أهلاً بك يا بطل! أنا وكيلك الذكي. اسألني عن أي شيء يخص البيانات الضخمة أو كيف تصبح خبيراً فيها! 😊</div>', unsafe_allow_html=True)
     
     for m in st.session_state.messages:
         role_class = "user-text" if m["role"] == "user" else "bot-text"
         st.markdown(f'<div class="{role_class}">{m["content"]}</div>', unsafe_allow_html=True)
-        if "chart" in m: st.line_chart(m["chart"])
 
-    u_input = st.chat_input("اسأل أي سؤال تقني أو عام عن البيانات الضخمة...")
+    u_input = st.chat_input("اسألني عن خطوات التعلم، الأدوات، أو الاستفادة...")
     query = u_input or st.session_state.get("q_auto")
     
     if query:
         ans = None
-        chart_data = None
         q_low = query.lower()
         
-        # محرك البحث الذكي (Keyword Matching)
+        # منطق الرد المرن (Flexible Matching)
         if any(w in q_low for w in ["تعريف", "ماهي", "معنى"]): ans = kb["تعريف"]
-        elif any(w in q_low for w in ["فرق", "مقارنة", "عادية"]): ans = kb["مقارنة"]
-        elif any(w in q_low for w in ["خصائص", "5vs", "v"]): ans = kb["خصائص"]
-        elif any(w in q_low for w in ["مجالات", "طب", "تعليم", "مرور", "استخدامات"]): ans = kb["مجالات_كاملة"]
-        elif any(w in q_low for w in ["تغير", "حياتنا", "المستقبل"]): ans = kb["تغيير_الحياة"]
-        elif "وظائف" in q_low or "أشتغل" in q_low: ans = kb["وظائف"]
-        elif "برامج" in q_low or "أدوات" in q_low or "تقنيات" in q_low: ans = kb["برامج"]
-        elif any(w in q_low for w in ["أمن", "خصوصية", "تشفير", "حماية"]): ans = kb["أمن_خصوصية"]
-        elif any(w in q_low for w in ["تخزين", "hdfs", "هارد"]): ans = kb["تخزين"]
-        elif any(w in q_low for w in ["ذكاء", "ai", "صناعي"]): ans = kb["ذكاء_اصطناعي"]
-        elif any(w in q_low for w in ["تحديات", "صعوبات", "مشاكل"]): ans = kb["تحديات"]
-        elif any(w in q_low for w in ["استفادة", "أهمية", "فوائد"]): ans = kb["استفادة"]
-        elif any(w in q_low for w in ["رسم", "بياني", "نمو"]):
-            ans = "إليكِ رسم بياني يوضح الانفجار الهائل في حجم البيانات عالمياً (بالزيتابايت): 📊"
-            chart_data = pd.DataFrame({'السنة': ['2010', '2015', '2020', '2025'], 'الحجم': [2, 15, 64, 180]}).set_index('السنة')
+        elif any(w in q_low for w in ["خصائص", "5vs"]): ans = kb["خصائص"]
+        elif any(w in q_low for w in ["أستفاد", "استفاد", "فوائد", "اهمية", "أهمية"]) and "تعلم" in q_low: ans = kb["استفادة_تعلم"]
+        elif any(w in q_low for w in ["أدوات", "ادوات", "برامج", "تكنولوجيا"]): ans = kb["أدوات_تعلم"]
+        elif any(w in q_low for w in ["خطوات", "كيف أبدأ", "طريق"]): ans = kb["خطوات_تعلم"]
+        elif any(w in q_low for w in ["ترتيب", "تجميع", "مراحل", "دورة حياة"]): ans = kb["ترتيب_تجميع"]
+        elif any(w in q_low for w in ["تغير", "حياتنا", "تأثير"]): ans = kb["تغيير_الحياة"]
+        elif any(w in q_low for w in ["هستفاد", "اللعبة", "لعبة", "بطل"]): ans = kb["استفادة_اللعبة"]
+        elif any(w in q_low for w in ["أمن", "خصوصية", "تشفير"]): ans = kb["أمن_خصوصية"]
+        elif any(w in q_low for w in ["ذكاء", "ai"]): ans = kb["ذكاء_اصطناعي"]
+        elif any(w in q_low for w in ["مجالات", "طب", "تعليم", "مرور"]): ans = kb["مجالات"]
 
         if ans is None:
             st.session_state.not_found = True
-            ans = "هذه النقطة متقدمة جداً! حالياً يمكنني إفادتك في المواضيع التالية التي غالباً ما تُسأل في المناقشات:"
+            ans = "عذراً، هذه المعلومة غير متوفرة حالياً. يمكنك سؤالي عن أحد المواضيع الشاملة التالية:"
         else:
             st.session_state.not_found = False
 
         st.session_state.messages.append({"role": "user", "content": query})
-        msg = {"role": "assistant", "content": ans}
-        if chart_data is not None: msg["chart"] = chart_data
-        st.session_state.messages.append(msg)
+        st.session_state.messages.append({"role": "assistant", "content": ans})
         
         if "q_auto" in st.session_state: del st.session_state["q_auto"]
         st.rerun()
 
+    # الأيقونات التفاعلية عند عدم العثور على إجابة
     if st.session_state.get("not_found"):
         cols = st.columns(3)
         with cols[0]:
-            if st.button("🛡️ الأمن والخصوصية"): st.session_state.q_auto = "أمن"; st.rerun()
+            if st.button("📈 خطوات التعلم"): st.session_state.q_auto = "خطوات"; st.rerun()
         with cols[1]:
-            if st.button("🤖 الذكاء الاصطناعي"): st.session_state.q_auto = "ذكاء"; st.rerun()
+            if st.button("📊 مراحل التجميع"): st.session_state.q_auto = "ترتيب"; st.rerun()
         with cols[2]:
-            if st.button("📦 طرق التخزين"): st.session_state.q_auto = "تخزين"; st.rerun()
+            if st.button("🎮 فائدة اللعبة"): st.session_state.q_auto = "لعبة"; st.rerun()
