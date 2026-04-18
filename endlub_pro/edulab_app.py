@@ -15,7 +15,7 @@ st.markdown("""
     /* جعل زرار القائمة ظاهر وواضح */
     [data-testid="stSidebarNav"] { padding-top: 20px; }
     
-    /* تنسيق الأزرار الجانبية وتصغير الخط */
+    /* تنسيق الأزرار الجانبية */
     .stButton>button { 
         width: 100%; 
         border-radius: 10px; 
@@ -34,43 +34,46 @@ st.markdown("""
         transform: scale(1.02);
     }
     
-    /* زر العودة للعبة */
     .game-link {
-        display: block;
-        width: 100%;
-        text-align: center;
-        background-color: #238636;
-        color: white !important;
-        padding: 12px;
-        border-radius: 10px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 14px;
-        margin-top: 20px;
-        border: 1px solid #3fb950;
+        display: block; width: 100%; text-align: center; background-color: #238636;
+        color: white !important; padding: 12px; border-radius: 10px; text-decoration: none;
+        font-weight: bold; font-size: 14px; margin-top: 20px; border: 1px solid #3fb950;
     }
     
-    /* تنسيق فقاعات الدردشة */
     .bot-text { background-color: #0d1a26; color: #00f2ff; border-right: 5px solid #00f2ff; padding: 15px; border-radius: 15px; margin-bottom: 15px; line-height: 1.6; }
     .user-text { background-color: #161b22; color: #ffffff; border-left: 5px solid #58a6ff; padding: 12px; border-radius: 12px; margin-bottom: 15px; }
     
-    /* تنسيق المخطط */
     .step-box { border: 1px solid #00f2ff; padding: 10px; border-radius: 8px; margin: 5px 0; text-align: center; background: #0d1117; color: #00f2ff; font-weight: bold; }
     .arrow { text-align: center; color: #58a6ff; font-size: 20px; }
     
-    /* إخفاء القوائم غير الضرورية مع الإبقاء على Header الخاص بالقائمة */
     #MainMenu, footer {visibility: hidden;}
     </style>
     """, unsafe_allow_html=True)
 
-# 2. قاعدة البيانات (Knowledge Base)
+# 2. قاعدة البيانات المطورة (Knowledge Base)
 kb = {
-    "تعريف": "البيانات الضخمة هي مجموعات بيانات هائلة ومعقدة تفوق قدرة البرامج التقليدية على المعالجة. 🔍",
-    "خصائص": """تتميز بـ **الـ 5Vs**: (الحجم، السرعة، التنوع، الموثوقية، والقيمة). ✨""",
-    "تغيير_الحياة": "بتسهل حياتنا من خلال تحسين الرعاية الصحية، تنظيم المرور، وتوفير تجربة تعليمية مخصصة! 🚀",
-    "مجالات": "تستخدم في: الطب 🏥، التعليم 🎓، المرور 🚗، والتجارة 🛒.",
-    "استفادة_تعلم": "تعلمها يفتح لك أبواب المستقبل في البرمجة وتحليل البيانات. 🌟",
-    "برامج": "أهم البرامج: **Python**، **Hadoop**، **Spark**، و **Tableau**. 💻",
+    "تعريف": "البيانات الضخمة هي 'النفط الجديد'؛ مجموعات بيانات هائلة جداً لدرجة أننا نحتاج لأجهزة خارقة لتحليلها وفهمها. 🔍",
+    "خصائص": """تتميز بـ **الـ 5Vs**:
+1. **Volume (الحجم):** كميات خرافية من البيانات.
+2. **Velocity (السرعة):** سرعة تدفق البيانات في الوقت الفعلي.
+3. **Variety (التنوع):** صور، نصوص، فيديوهات، وأرقام.
+4. **Veracity (الموثوقية):** التأكد من دقة المعلومات.
+5. **Value (القيمة):** الفائدة اللي بنطلع بيها من كل ده. ✨""",
+    
+    "تغيير_الحياة": """البيانات الضخمة بتغير حياتنا لأنها بتخلي العالم 'أذكى':
+- **التنبؤ بالمستقبل:** بنعرف الأعاصير أو الأزمات قبل ما تحصل.
+- **توفير الوقت:** خرائط جوجل بتوفر عليك ساعات من الزحمة.
+- **تجارب مخصصة:** المواقع بتعرف ذوقك وبتقترح لك اللي تحبه بالظبط.
+- **الأمان:** البنوك بتعرف لو فيه عملية سرقة على كارتك في ثانية واحدة! 🚀""",
+
+    "مجالات": """إليك كيف تعمل البيانات في أهم المجالات:
+- **🏥 الطب:** تساعد الأطباء في تشخيص الأمراض النادرة وتحليل الجينات لاختيار العلاج الأنسب لكل جسم (الطب الشخصي).
+- **🎓 التعليم:** تحلل مستوى كل طالب وتعرف "نقاط ضعفه" عشان تقدم له شرح مخصص يناسب قدراته.
+- **🚗 المرور:** الكاميرات والحساسات بتحلل الزحمة وبتغير توقيت إشارات المرور آلياً عشان الطريق يفضى.
+- **🛒 التجارة:** المواقع بتعرف إنت بتدور على إيه وبتحلل آراء الملايين عشان تصنع منتجات الناس فعلاً محتاجاها. ✨""",
+
+    "استفادة_تعلم": "تعلمها يفتح لك أبواب العمل كـ Data Scientist أو AI Engineer في أكبر شركات العالم. 🌟",
+    "برامج": "الأدوات اللي لازم تتعلمها: **Python** للبرمجة، **Hadoop** للتخزين، و **Spark** للمعالجة السريعة. 💻",
     "خطوات_ترتيب": """مخطط رحلة البيانات:
 <div class="step-box">1. التجميع 📥</div>
 <div class="arrow">⬇️</div>
@@ -80,8 +83,7 @@ kb = {
 <div class="arrow">⬇️</div>
 <div class="step-box">4. التحليل 🧠</div>
 <div class="arrow">⬇️</div>
-<div class="step-box">5. التنفيذ ✅</div>""",
-    "رسم_بياني": "حجم البيانات يتضاعف كل عامين، ومن المتوقع وصوله لـ 175 زيتابايت بحلول 2025! 📈"
+<div class="step-box">5. التنفيذ ✅</div>"""
 }
 
 # 3. إدارة الجلسة
@@ -124,6 +126,14 @@ else:
     for m in st.session_state.messages:
         role_class = "user-text" if m["role"] == "user" else "bot-text"
         st.markdown(f'<div class="{role_class}">{m["content"]}</div>', unsafe_allow_html=True)
+        
+        # إذا كانت الرسالة تحتوي على كلمة "رسم بياني" في الرد، نعرض الرسم
+        if "رسم_بياني_تفاعلي" in m["content"]:
+            chart_data = pd.DataFrame({
+                'السنة': [2010, 2015, 2020, 2022, 2025],
+                'حجم البيانات (زيتابايت)': [2, 12, 64, 97, 175]
+            })
+            st.area_chart(chart_data.set_index('السنة'))
 
     u_input = st.chat_input("اسألني أي شيء...")
     query = u_input or st.session_state.get("q_auto")
@@ -135,10 +145,13 @@ else:
         elif "خصائص" in q_low or "2" in q_low: ans = kb["خصائص"]
         elif "تغير" in q_low or "3" in q_low: ans = kb["تغيير_الحياة"]
         elif "مجالات" in q_low or "4" in q_low: ans = kb["مجالات"]
-        elif "رسم" in q_low or "5" in q_low: ans = kb["رسم_بياني"]
+        elif "رسم" in q_low or "5" in q_low: 
+            ans = "بص يا بطل، ده رسم بياني بيوضح إزاي حجم البيانات في العالم بينفجر! في 2010 كان 2 زيتابايت بس، والمتوقع في 2025 يوصل لـ 175! رسم_بياني_تفاعلي 📈"
         elif "استفادة" in q_low or "تعلم" in q_low: ans = kb["استفادة_تعلم"] + "\n\n" + kb["برامج"]
         elif "ترتيب" in q_low or "مخطط" in q_low: ans = kb["خطوات_ترتيب"]
+        
         if ans is None: ans = "أنا هنا لمساعدتك! اختر موضوعاً من القائمة الجانبية."
+        
         st.session_state.messages.append({"role": "user", "content": query})
         st.session_state.messages.append({"role": "assistant", "content": ans})
         if "q_auto" in st.session_state: del st.session_state["q_auto"]
