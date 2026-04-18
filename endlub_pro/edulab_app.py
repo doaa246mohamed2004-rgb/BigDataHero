@@ -3,14 +3,17 @@ import pandas as pd
 import random
 
 # 1. إعدادات الصفحة وتنسيق الـ CSS
-st.set_page_config(page_title="Big Data Hero", layout="wide")
+st.set_page_config(page_title="Big Data Hero", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""
     <style>
     .stApp { background-color: #010409; }
     .stMarkdown, p, li { color: #c9d1d9 !important; font-family: 'Arial'; font-size: 16px; direction: rtl; text-align: right; }
-    h1 { color: #00f2ff !important; text-shadow: 0 0 10px #00f2ff; font-size: 28px !important; text-align: center; margin-bottom: 20px; }
+    h1 { color: #00f2ff !important; text-shadow: 0 0 10px #00f2ff; font-size: 26px !important; text-align: center; margin-bottom: 20px; }
     [data-testid="stSidebar"] { background-color: #0d1117; border-left: 1px solid #00f2ff; min-width: 280px; }
+    
+    /* جعل زرار القائمة ظاهر وواضح */
+    [data-testid="stSidebarNav"] { padding-top: 20px; }
     
     /* تنسيق الأزرار الجانبية وتصغير الخط */
     .stButton>button { 
@@ -20,7 +23,7 @@ st.markdown("""
         color: white; 
         height: 3em; 
         font-weight: normal; 
-        font-size: 14px !important; /* تصغير خط العناوين الجانبية */
+        font-size: 13px !important; 
         margin-bottom: 8px;
         border: 1px solid #58a6ff;
         transition: 0.3s;
@@ -31,19 +34,19 @@ st.markdown("""
         transform: scale(1.02);
     }
     
-    /* زر خاص للعبة بلون مختلف */
+    /* زر العودة للعبة */
     .game-link {
         display: block;
         width: 100%;
         text-align: center;
         background-color: #238636;
         color: white !important;
-        padding: 10px;
+        padding: 12px;
         border-radius: 10px;
         text-decoration: none;
         font-weight: bold;
         font-size: 14px;
-        margin-top: 10px;
+        margin-top: 20px;
         border: 1px solid #3fb950;
     }
     
@@ -55,25 +58,20 @@ st.markdown("""
     .step-box { border: 1px solid #00f2ff; padding: 10px; border-radius: 8px; margin: 5px 0; text-align: center; background: #0d1117; color: #00f2ff; font-weight: bold; }
     .arrow { text-align: center; color: #58a6ff; font-size: 20px; }
     
-    #MainMenu, footer, header {visibility: hidden;}
+    /* إخفاء القوائم غير الضرورية مع الإبقاء على Header الخاص بالقائمة */
+    #MainMenu, footer {visibility: hidden;}
     </style>
     """, unsafe_allow_html=True)
 
 # 2. قاعدة البيانات (Knowledge Base)
 kb = {
-    "تعريف": "البيانات الضخمة هي 'بحر المعلومات' الهائل الذي يحيط بنا؛ هي مجموعات بيانات ضخمة ومعقدة جداً لدرجة أن البرامج العادية لا تستطيع التعامل معها. 🔍",
-    "خصائص": """البيانات الضخمة تتميز بـ **الـ 5Vs**:
-1. **الحجم (Volume)**
-2. **السرعة (Velocity)**
-3. **التنوع (Variety)**
-4. **الموثوقية (Veracity)**
-5. **القيمة (Value)** ✨""",
-    "تغيير_الحياة": "بتغير حياتنا لأنها بتخلينا نتوقع المرض قبل حدوثه، ونحل زحمة المرور، وبتحسن تعليمنا وصحتنا! 🚀",
+    "تعريف": "البيانات الضخمة هي مجموعات بيانات هائلة ومعقدة تفوق قدرة البرامج التقليدية على المعالجة. 🔍",
+    "خصائص": """تتميز بـ **الـ 5Vs**: (الحجم، السرعة، التنوع، الموثوقية، والقيمة). ✨""",
+    "تغيير_الحياة": "بتسهل حياتنا من خلال تحسين الرعاية الصحية، تنظيم المرور، وتوفير تجربة تعليمية مخصصة! 🚀",
     "مجالات": "تستخدم في: الطب 🏥، التعليم 🎓، المرور 🚗، والتجارة 🛒.",
-    "فائدة_اللعبة": "في 'مغامرة بطل البيانات'، ستكتشف كيف تلعب البيانات دور البطولة في حياتنا وكيف نستخدمها بذكاء! 🎮",
-    "استفادة_تعلم": "تعلمها يفتح لك أبواب العمل في كبرى شركات التكنولوجيا العالمية ويجعلك خبير المستقبل. 🌟",
-    "برامج": "أهم البرامج: **Python**، **Hadoop**، **Apache Spark**، و **Tableau**. 💻",
-    "خطوات_ترتيب": """إليك رحلة البيانات:
+    "استفادة_تعلم": "تعلمها يفتح لك أبواب المستقبل في البرمجة وتحليل البيانات. 🌟",
+    "برامج": "أهم البرامج: **Python**، **Hadoop**، **Spark**، و **Tableau**. 💻",
+    "خطوات_ترتيب": """مخطط رحلة البيانات:
 <div class="step-box">1. التجميع 📥</div>
 <div class="arrow">⬇️</div>
 <div class="step-box">2. التخزين 🗄️</div>
@@ -93,16 +91,15 @@ if "view" not in st.session_state: st.session_state.view = "chat"
 # 4. الواجهة الجانبية (Sidebar)
 with st.sidebar:
     st.markdown('<h1>Big Data Hero</h1>', unsafe_allow_html=True)
-    st.markdown('<p style="color:#00f2ff;text-align:center;font-size:14px;">📍 المحطات التعليمية</p>', unsafe_allow_html=True)
+    st.markdown('<p style="color:#00f2ff;text-align:center;font-size:13px;">📍 المحطات التعليمية</p>', unsafe_allow_html=True)
     
-    if st.button("🔍 1. تعريف البيانات الضخمة"): st.session_state.q_auto = "تعريف"
+    if st.button("🔍 1. تعريف البيانات"): st.session_state.q_auto = "تعريف"
     if st.button("⚡ 2. الخصائص والأهمية"): st.session_state.q_auto = "خصائص"
     if st.button("🚀 3. كيف تغير حياتنا؟"): st.session_state.q_auto = "تغيير"
     if st.button("🌍 4. مجالات الاستخدام"): st.session_state.q_auto = "مجالات"
     if st.button("📈 5. رسم بياني للنمو"): st.session_state.q_auto = "رسم"
     
     st.markdown("---")
-    st.markdown('<p style="color:#58a6ff;text-align:right;font-size:14px;">🛠️ ركن الأبطال</p>', unsafe_allow_html=True)
     if st.button("🎓 استفادة وبرامج التعلم"): st.session_state.q_auto = "استفادة"
     if st.button("⛓️ مخطط ترتيب البيانات"): st.session_state.q_auto = "ترتيب"
     if st.button("📝 اختبر ذكاءك"): st.session_state.view = "quiz"
@@ -110,7 +107,6 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.view = "chat"
     
-    # إضافة زر العودة للعبة في نهاية القائمة
     st.markdown('<a href="https://view.genially.com/69c2cab192730eedd4af164e" target="_blank" class="game-link">🎮 العودة إلى مغامرة البيانات</a>', unsafe_allow_html=True)
 
 # 5. منطق العرض
