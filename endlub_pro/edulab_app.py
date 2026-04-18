@@ -19,7 +19,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. قاعدة البيانات المطورة (تشمل كل طلباتك)
+# 3. قاعدة البيانات الموسعة (تشمل كل العناصر المطلوبة)
 kb = {
     "تعريف": "البيانات الضخمة هي مجموعات بيانات هائلة ومعقدة تفوق قدرة البرامج التقليدية على المعالجة. 🔍",
     "خصائص": "خصائص الـ 5Vs هي: الحجم (Volume)، السرعة (Velocity)، التنوع (Variety)، الموثوقية (Veracity)، والقيمة (Value). ⚡",
@@ -29,6 +29,9 @@ kb = {
     "مقارنة": "الفرق: البيانات العادية محدودة الحجم وتخزن في جهاز واحد، بينما الضخمة هائلة وموزعة عبر آلاف الأجهزة. ⚖️",
     "طب": "في الطب: تستخدم في تشخيص الأمراض مبكراً، واكتشاف علاجات جديدة، ومراقبة صحة المرضى عن بُعد. 🏥",
     "تغيير_الحياة": "تغير حياتنا بجعل المدن أذكى، والخدمات أسرع، وتقديم حلول دقيقة لمشاكل الفقر، المناخ، والصحة العامة. 🚀",
+    "وظائف": "الوظائف المتاحة: عالم بيانات (Data Scientist)، مهندس بيانات (Data Engineer)، ومحلل بيانات ضخمة (Big Data Analyst). 💼",
+    "برامج": "أهم البرامج والأدوات: Hadoop، Apache Spark، NoSQL databases، لغة Python، ولغة R. 💻",
+    "أهمية": "أهميتها تكمن في خفض التكاليف، توفير الوقت، اتخاذ قرارات دقيقة، وتطوير منتجات تناسب احتياجات الناس. 💎",
     "هدف_اللعبة": "في اللعبة دي، بنتعلم إزاي نحول الأرقام الضخمة لمعلومات مفيدة تحل مشاكل العالم الحقيقي! 🎮"
 }
 
@@ -39,8 +42,8 @@ if "view" not in st.session_state:
     st.session_state.view = "chat"
 
 quiz_data = [
-    {"q": "هل البيانات الضخمة تخزن في جهاز كمبيوتر واحد؟", "a": ["نعم", "لا"], "correct": "لا"},
-    {"q": "من مجالات البيانات الضخمة الطب والتعليم؟", "a": ["صح", "خطأ"], "correct": "صح"}
+    {"q": "أي برنامج يستخدم للتعامل مع البيانات الضخمة؟", "a": ["Hadoop", "Excel"], "correct": "Hadoop"},
+    {"q": "هل الحجم (Volume) هو أحد خصائص البيانات الضخمة؟", "a": ["نعم", "لا"], "correct": "نعم"}
 ]
 
 # 5. الواجهة الأساسية
@@ -58,10 +61,11 @@ with st.sidebar:
     st.markdown("---")
     st.subheader("🚀 وصول سريع")
     if st.button("🔍 التعريف والفرق"): st.session_state.q_auto = "فرق"
-    if st.button("🏥 في الطب"): st.session_state.q_auto = "طب"
-    if st.button("🎓 في التعليم"): st.session_state.q_auto = "تعليم"
+    if st.button("⚡ الخصائص والأهمية"): st.session_state.q_auto = "خصائص"
+    if st.button("💼 الوظائف والبرامج"): st.session_state.q_auto = "وظائف"
+    if st.button("🏥 الطب والتعليم"): st.session_state.q_auto = "تعليم"
+    if st.button("📊 رسم بياني للنمو"): st.session_state.q_auto = "رسم"
     if st.button("🌍 كيف تغير حياتنا؟"): st.session_state.q_auto = "تغيير"
-    if st.button("💼 الفوائد والمجالات"): st.session_state.q_auto = "فوائد"
 
 # 6. منطق العرض
 if st.session_state.view == "quiz":
@@ -74,33 +78,43 @@ if st.session_state.view == "quiz":
             else: st.error("حاول تاني!")
 else:
     if not st.session_state.messages:
-        st.markdown('<div class="bot-text">مرحباً بك يا بطل! أنا وكيلك الذكي. اسألني عن أي شيء في عالم البيانات الضخمة! 😊</div>', unsafe_allow_html=True)
+        st.markdown('<div class="bot-text">مرحباً بك يا بطلة! أنا وكيلك الذكي. كل تفاصيل البيج داتا (وظائف، برامج، أهمية) جاهزة هنا. اسأليني! 😊</div>', unsafe_allow_html=True)
     
     for m in st.session_state.messages:
         role_class = "user-text" if m["role"] == "user" else "bot-text"
         st.markdown(f'<div class="{role_class}">{m["content"]}</div>', unsafe_allow_html=True)
+        if "chart" in m: st.line_chart(m["chart"])
 
-    u_input = st.chat_input("اكتب سؤالك هنا...")
+    u_input = st.chat_input("اسألني عن الوظائف أو البرامج أو أي شيء...")
     query = u_input or st.session_state.get("q_auto")
     
     if query:
-        ans = "معلومة رائعة! هل تريد معرفة المزيد؟ 😊"
+        ans = "معلومة رائعة! حابة تعرفي إيه تاني؟ 😊"
+        chart_data = None
         q_low = query.lower()
         
         if any(w in q_low for w in ["تعريف", "ماهي"]): ans = kb["تعريف"]
-        elif "فرق" in q_low or "مقارنة" in q_low: ans = kb["mقارنة"]
+        elif any(w in q_low for w in ["فرق", "مقارنة"]): ans = kb["مقارنة"]
+        elif "خصائص" in q_low or "أهمية" in q_low: ans = f"{kb['خصائص']} \n\n {kb['أهمية']}"
+        elif "وظائف" in q_low: ans = kb["وظائف"]
+        elif "برامج" in q_low or "أدوات" in q_low: ans = kb["برامج"]
         elif "طب" in q_low: ans = kb["طب"]
         elif "تعليم" in q_low: ans = kb["تعليم"]
         elif "مجالات" in q_low: ans = kb["مجالات"]
         elif "تغير" in q_low or "حياتنا" in q_low: ans = kb["تغيير_الحياة"]
-        elif "استفادة" in q_low or "فوائد" in q_low: ans = kb["استفادة"]
         elif "نتعلم" in q_low or "هدف" in q_low: ans = kb["هدف_اللعبة"]
-        
+        elif "رسم" in q_low or "بياني" in q_low:
+            ans = "إليكِ رسم بياني يوضح الانفجار الهائل في حجم البيانات عالمياً (بالزيتابايت): 📊"
+            chart_data = pd.DataFrame({'السنة': ['2010', '2015', '2020', '2025'], 'الحجم': [2, 15, 64, 180]}).set_index('السنة')
+
         st.markdown(f'<div class="user-text">👤: {query}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="bot-text">🤖: {ans}</div>', unsafe_allow_html=True)
+        if chart_data is not None: st.line_chart(chart_data)
         
         st.session_state.messages.append({"role": "user", "content": query})
-        st.session_state.messages.append({"role": "assistant", "content": ans})
+        msg = {"role": "assistant", "content": ans}
+        if chart_data is not None: msg["chart"] = chart_data
+        st.session_state.messages.append(msg)
         
         if "q_auto" in st.session_state: del st.session_state["q_auto"]
         st.rerun()
