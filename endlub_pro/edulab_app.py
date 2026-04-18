@@ -14,20 +14,22 @@ st.markdown("""
     [data-testid="stSidebar"] { background-color: #0d1117; border-left: 1px solid #00f2ff; }
     .bot-text { background-color: #0d1a26; color: #00f2ff; border-right: 4px solid #00f2ff; padding: 12px; border-radius: 12px; margin-bottom: 10px; line-height: 1.6; }
     .user-text { background-color: #161b22; color: #ffffff; border-left: 4px solid #58a6ff; padding: 10px; border-radius: 10px; margin-bottom: 10px; }
-    .stButton>button { width: 100%; border-radius: 8px; background-color: #1f6feb; color: white; height: 2.8em; }
+    .stButton>button { width: 100%; border-radius: 8px; background-color: #1f6feb; color: white; height: 2.8em; font-weight: bold; }
     #MainMenu, footer, header {visibility: hidden;}
     </style>
     """, unsafe_allow_html=True)
 
-# 3. قاعدة البيانات الشاملة
+# 3. قاعدة البيانات المطورة (تشمل كل طلباتك)
 kb = {
-    "تعريف": "الالبيانات الضخمة هي مجموعات بيانات هائلة ومعقدة بتيجي من مصادر كتير، والبرامج العادية مش بتقدر تعالجها. 🔍",
+    "تعريف": "البيانات الضخمة هي مجموعات بيانات هائلة ومعقدة تفوق قدرة البرامج التقليدية على المعالجة. 🔍",
     "خصائص": "خصائص الـ 5Vs هي: الحجم (Volume)، السرعة (Velocity)، التنوع (Variety)، الموثوقية (Veracity)، والقيمة (Value). ⚡",
-    "وظائف": "من أهم الوظائف: عالم بيانات، مهندس بيانات، ومحلل بيانات. 💼",
-    "تعليم": "في التعليم بتساعدنا نفهم مستوى كل طالب ونقدم له محتوى يناسب قدراته بالظبط. 🎓",
-    "استفادة": "بتعلمك إزاي تاخد قرارات صح بناءً على الأرقام وتفتح لك مجالات شغل عالمية. 🌟",
-    "أهمية": "أهميتها إنها بتخلينا نتوقع المستقبل، زي توقع الأمراض أو حالة الطقس وتحسين أمن البنوك. 💎",
-    "هدف_اللعبة": "في اللعبة دي، بنتعلم إزاي نحول الأرقام الضخمة لمعلومات مفيدة، وبنفهم إزاي التكنولوجيا بتفكر عشان تحل مشاكل العالم الحقيقي باستخدام البيانات! 🎮🚀"
+    "مجالات": "تنتشر في: الطب، البنوك، التجارة الإلكترونية، المواصلات، الفضاء، والمدن الذكية. 🌍",
+    "تعليم": "في التعليم: توفر 'التعلم الشخصي'، وتتوقع مستوى الطلاب المتعثرين، وتساعد في تطوير المناهج الرقمية. 🎓",
+    "استفادة": "الاستفادة: توفر فرص عمل بمرتبات مرتفعة، وتنمي مهارة حل المشكلات واتخاذ القرارات الذكية بناءً على الحقائق. 🌟",
+    "مقارنة": "الفرق: البيانات العادية محدودة الحجم وتخزن في جهاز واحد، بينما الضخمة هائلة وموزعة عبر آلاف الأجهزة. ⚖️",
+    "طب": "في الطب: تستخدم في تشخيص الأمراض مبكراً، واكتشاف علاجات جديدة، ومراقبة صحة المرضى عن بُعد. 🏥",
+    "تغيير_الحياة": "تغير حياتنا بجعل المدن أذكى، والخدمات أسرع، وتقديم حلول دقيقة لمشاكل الفقر، المناخ، والصحة العامة. 🚀",
+    "هدف_اللعبة": "في اللعبة دي، بنتعلم إزاي نحول الأرقام الضخمة لمعلومات مفيدة تحل مشاكل العالم الحقيقي! 🎮"
 }
 
 # 4. إدارة الجلسة
@@ -37,8 +39,8 @@ if "view" not in st.session_state:
     st.session_state.view = "chat"
 
 quiz_data = [
-    {"q": "هل يمكن تخزين البيانات الضخمة على جهاز واحد؟", "a": ["نعم", "لا"], "correct": "لا"},
-    {"q": "بايثون هي اللغة الأهم في تحليل البيانات؟", "a": ["صح", "خطأ"], "correct": "صح"}
+    {"q": "هل البيانات الضخمة تخزن في جهاز كمبيوتر واحد؟", "a": ["نعم", "لا"], "correct": "لا"},
+    {"q": "من مجالات البيانات الضخمة الطب والتعليم؟", "a": ["صح", "خطأ"], "correct": "صح"}
 ]
 
 # 5. الواجهة الأساسية
@@ -55,11 +57,11 @@ with st.sidebar:
     
     st.markdown("---")
     st.subheader("🚀 وصول سريع")
-    if st.button("🔍 ما هي البيانات الضخمة؟"): st.session_state.q_auto = "تعريف"
-    if st.button("⚡ خصائص الـ 5Vs"): st.session_state.q_auto = "خصائص"
-    if st.button("💎 أهمية البيانات"): st.session_state.q_auto = "أهمية"
-    if st.button("📊 نمو البيانات"): st.session_state.q_auto = "رسم بياني"
-    if st.button("🎮 ماذا نتعلم هنا؟"): st.session_state.q_auto = "هدف"
+    if st.button("🔍 التعريف والفرق"): st.session_state.q_auto = "فرق"
+    if st.button("🏥 في الطب"): st.session_state.q_auto = "طب"
+    if st.button("🎓 في التعليم"): st.session_state.q_auto = "تعليم"
+    if st.button("🌍 كيف تغير حياتنا؟"): st.session_state.q_auto = "تغيير"
+    if st.button("💼 الفوائد والمجالات"): st.session_state.q_auto = "فوائد"
 
 # 6. منطق العرض
 if st.session_state.view == "quiz":
@@ -71,44 +73,34 @@ if st.session_state.view == "quiz":
             if choice == q_item["correct"]: st.success("صح! 🎯")
             else: st.error("حاول تاني!")
 else:
-    # عرض الرسائل السابقة
     if not st.session_state.messages:
-        st.markdown('<div class="bot-text">مرحباً بك! أنا وكيلك الذكي. اسألني عن أي شيء يخص البيانات الضخمة! 😊</div>', unsafe_allow_html=True)
+        st.markdown('<div class="bot-text">مرحباً بك يا بطل! أنا وكيلك الذكي. اسألني عن أي شيء في عالم البيانات الضخمة! 😊</div>', unsafe_allow_html=True)
     
     for m in st.session_state.messages:
         role_class = "user-text" if m["role"] == "user" else "bot-text"
         st.markdown(f'<div class="{role_class}">{m["content"]}</div>', unsafe_allow_html=True)
-        if "chart" in m: st.line_chart(m["chart"])
 
-    # مدخلات المستخدم
     u_input = st.chat_input("اكتب سؤالك هنا...")
     query = u_input or st.session_state.get("q_auto")
     
     if query:
-        ans = "كلام جميل! حابب تعرف إيه تاني بخصوص البيانات الضخمة؟ 😊"
-        chart = None
+        ans = "معلومة رائعة! هل تريد معرفة المزيد؟ 😊"
         q_low = query.lower()
         
-        if any(w in q_low for w in ["تعريف", "ماهي", "ايه هي"]): ans = kb["تعريف"]
-        elif "خصائص" in q_low: ans = kb["خصائص"]
-        elif "أهمية" in q_low or "اهميه" in q_low: ans = kb["أهمية"]
-        elif "وظائف" in q_low: ans = kb["وظائف"]
+        if any(w in q_low for w in ["تعريف", "ماهي"]): ans = kb["تعريف"]
+        elif "فرق" in q_low or "مقارنة" in q_low: ans = kb["mقارنة"]
+        elif "طب" in q_low: ans = kb["طب"]
         elif "تعليم" in q_low: ans = kb["تعليم"]
+        elif "مجالات" in q_low: ans = kb["مجالات"]
+        elif "تغير" in q_low or "حياتنا" in q_low: ans = kb["تغيير_الحياة"]
+        elif "استفادة" in q_low or "فوائد" in q_low: ans = kb["استفادة"]
         elif "نتعلم" in q_low or "هدف" in q_low: ans = kb["هدف_اللعبة"]
-        elif "رسم" in q_low or "بياني" in q_low:
-            ans = "إليك رسم بياني يوضح الانفجار الهائل في حجم البيانات عالمياً (بالزيتابايت): 📊"
-            chart = pd.DataFrame({'السنة': ['2010', '2015', '2020', '2025'], 'الحجم': [2, 15, 64, 180]}).set_index('السنة')
-
-        # عرض الرد الحالي
+        
         st.markdown(f'<div class="user-text">👤: {query}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="bot-text">🤖: {ans}</div>', unsafe_allow_html=True)
-        if chart is not None: st.line_chart(chart)
         
-        # حفظ في التاريخ
         st.session_state.messages.append({"role": "user", "content": query})
-        msg = {"role": "assistant", "content": ans}
-        if chart is not None: msg["chart"] = chart
-        st.session_state.messages.append(msg)
+        st.session_state.messages.append({"role": "assistant", "content": ans})
         
         if "q_auto" in st.session_state: del st.session_state["q_auto"]
         st.rerun()
