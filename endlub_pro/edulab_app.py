@@ -1,170 +1,132 @@
 import streamlit as st
 import pandas as pd
-import random
+from huggingface_hub import InferenceClient
 
-# 1. إعدادات الصفحة وتنسيق الـ CSS المطور
-st.set_page_config(page_title="Big Data Hero 🤖", layout="wide", initial_sidebar_state="expanded")
+# 1. إعدادات الصفحة الأساسية
+st.set_page_config(
+    page_title="Big Data Hero 🤖", 
+    layout="wide", 
+    initial_sidebar_state="collapsed"
+)
 
+# --- ضع مفتاح الـ Token الخاص بك هنا من Hugging Face ---
+HF_TOKEN = "YOUR_HUGGING_FACE_TOKEN_HERE"
+client = InferenceClient(model="HuggingFaceH4/zephyr-7b-beta", token=HF_TOKEN)
+
+# 2. تنسيق الـ CSS المطور (كودك القديم بالكامل)
 st.markdown("""
     <style>
-    /* تحسين الخلفية العامة والخطوط */
-    .stApp { background: linear-gradient(135deg, #010409 0%, #0d1117 100%); }
-    .stMarkdown, p, li { color: #c9d1d9 !important; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; direction: rtl; text-align: right; }
-    
-    /* تنسيق العناوين بتأثير نيون */
-    h1 { color: #00f2ff !important; text-shadow: 0 0 15px #00f2ff; font-size: 30px !important; text-align: center; margin-bottom: 25px; border-bottom: 2px solid #1f6feb; padding-bottom: 10px; }
-    h2, h3 { color: #58a6ff !important; direction: rtl; text-align: right; }
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
-    /* تحسين شكل السايدبار */
-    [data-testid="stSidebar"] { background-color: #0d1117; border-left: 2px solid #00f2ff; }
-    
-    /* تنسيق الأزرار لتكون تفاعلية أكثر */
-    .stButton>button { 
-        width: 100%; border-radius: 12px; background: linear-gradient(45deg, #1f6feb, #388bfd); 
-        color: white; height: 3.2em; font-size: 14px !important; font-weight: bold;
-        margin-bottom: 10px; border: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(31, 111, 235, 0.3);
-    }
-    .stButton>button:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 242, 255, 0.4); border: 1px solid #00f2ff; }
-    
-    /* رابط اللعبة */
-    .game-link {
-        display: block; width: 100%; text-align: center; background: linear-gradient(45deg, #238636, #2ea043);
-        color: white !important; padding: 15px; border-radius: 12px; text-decoration: none;
-        font-weight: bold; font-size: 15px; margin-top: 20px; border: 1px solid #3fb950;
+    .stApp { background: linear-gradient(135deg, #010409 0%, #0d1117 100%) !important; }
+    [data-testid="stSidebar"] { background-color: #0d1117 !important; }
+    [data-testid="stChatInput"] { background-color: #161b22 !important; border-radius: 15px; border: 1px solid #30363d !important; }
+    [data-testid="stChatInput"] textarea { color: #ffffff !important; background-color: #0d1117 !important; }
+    [data-testid="stChatInput"] textarea::placeholder { color: rgba(255, 255, 255, 0.8) !important; }
+
+    footer {display: none !important;}
+    header {visibility: hidden;}
+
+    .stMarkdown, p, li, label, .stSelectbox, .stRadio, div { 
+        color: #FFFFFF !important; font-family: 'Cairo', sans-serif !important; font-size: 20px !important; direction: rtl; text-align: right; 
     }
     
-    /* فقاعات الدردشة المحسنة */
-    .bot-text { background-color: #0d1a26; color: #ffffff; border-right: 5px solid #00f2ff; padding: 18px; border-radius: 15px; margin-bottom: 15px; box-shadow: 5px 5px 15px rgba(0,0,0,0.3); line-height: 1.8; }
-    .user-text { background-color: #161b22; color: #00f2ff; border-left: 5px solid #58a6ff; padding: 12px; border-radius: 12px; margin-bottom: 15px; font-weight: 500; }
-    
-    /* صناديق الخطوات */
-    .step-box { border: 2px solid #00f2ff; padding: 12px; border-radius: 12px; margin: 8px 0; text-align: center; background: rgba(0, 242, 255, 0.1); color: #00f2ff; font-weight: bold; font-size: 18px; }
-    
-    #MainMenu, footer {visibility: hidden;}
+    .sidebar-title { color: #FFD700 !important; text-align: center; font-size: 24px !important; font-weight: bold; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
+    h1 { color: #00f2ff !important; text-shadow: 0 0 15px #00f2ff; text-align: center; border-bottom: 2px solid #1f6feb; padding-bottom: 10px; font-family: 'Cairo', sans-serif !important; }
+
+    .bot-text { background-color: #0d1a26; border-right: 5px solid #00f2ff; padding: 20px; border-radius: 15px; margin-bottom: 15px; }
+    .user-text { background-color: #161b22; border-left: 5px solid #58a6ff; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
+
+    .stButton>button { width: 100%; border-radius: 12px; background: linear-gradient(45deg, #1f6feb, #388bfd); color: white; font-weight: bold; }
+    .game-link { display: block; width: 100%; text-align: center; background: linear-gradient(45deg, #238636, #2ea043); color: white !important; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+    .step-box { border: 2px solid #00f2ff; padding: 15px; border-radius: 12px; margin: 10px 0; background: rgba(0, 242, 255, 0.1); color: #00f2ff; font-weight: bold; }
     </style>
     """, unsafe_allow_html=True)
 
-# 2. قاعدة البيانات المطورة
+# 3. قاعدة المعرفة (المعلومات التي وضعتِها يدوياً)
 kb = {
-    "تعريف": "البيانات الضخمة (Big Data) هي 'منجم الذهب' الرقمي؛ هي كميات هائلة من المعلومات اللي بتنتج كل ثانية من موبايلاتنا، وحساسات الشوارع، وحتى الأجهزة المنزلية! 🔍✨",
-    
-    "الفرق": """🌟 **مقارنة الأبطال:**
-1. **البيانات العادية:** زي جدول درجاتك، حجمها صغير، وسهل تفتحها على أي لابتوب.
-2. **البيانات الضخمة:** حجمها بالـ 'زيتابايت' (مليار تيرابايت!)، وسرعتها رهيبة، ومحتاجة 'جيش' من السيرفرات عشان يقدر يحللها. 🔥""",
-
-    "ذكاء_اصطناعي": """🤝 **الثنائي الخارق:**
-البيانات الضخمة هي **'البنزين'** والذكاء الاصطناعي هو **'المحرك'**. 
-الـ AI من غير بيانات ضخمة بيبقى زي الطفل الذكي اللي مبيقرأش كتب؛ كل ما تدي بيانات أكتر، الـ AI بيبقى عبقري في توقعاته! 🧠🤖""",
-
-    "تغيير_الحياة": """🚀 **كيف غيرت عالمنا؟**
-- **الطب الذكي:** تشخيص الأمراض قبل ما تظهر أعراضها! 🏥
-- **أمانك المالي:** البنك بيعرف إن كارتك اتسرق في ثانية لو لقوا عملية شراء مش شبه عاداتك. 💳
-- **مدن المستقبل:** إشارات مرور ذكية بتقلل الزحمة تلقائياً. 🚦""",
-
-    "خصائص": """✨ **الخصائص الـ 5 (5Vs):**
-1. **Volume (الحجم):** كميات خرافية.
-2. **Velocity (السرعة):** بتنتج وتتحلل في لحظتها.
-3. **Variety (التنوع):** صور، فيديوهات، نصوص، أصوات.
-4. **Veracity (الموثوقية):** التأكد إن البيانات صحيحة مش "دوشة".
-5. **Value (القيمة):** أهم حاجة.. إزاي نحولها لفلوس أو فايدة! 💎""",
-
-    "خطوات_ترتيب": """⛓️ **مخطط رحلة البيانات الضخمة:**
+    "تعريف": "البيانات الضخمة (Big Data) هي 'منجم الذهب' الرقمي؛ هي كميات هائلة من المعلومات اللي بتنتج كل ثانية من موبايلاتنا وحياتنا! 🔍✨",
+    "الفرق": "🌟 **مقارنة الأبطال:**\n1. **البيانات العادية:** زي جدول درجاتك، حجمها صغير.\n2. **البيانات الضخمة:** حجمها بالـ 'زيتابايت' ومحتاجة سيرفرات قوية جداً. 🔥",
+    "ذكاء": "🤝 **الثنائي الخارق:**\nالبيانات الضخمة هي 'البنزين' والذكاء الاصطناعي هو 'المحرك'. كل ما تدي بيانات أكتر، الـ AI بيبقى أذكى! 🧠🤖",
+    "تغيير": "🚀 **كيف غيرت عالمنا؟**\n- **الطب الذكي:** تشخيص الأمراض.\n- **أمانك المالي:** حماية كروت البنك.\n- **مدن المستقبل:** تقليل الزحمة. 🚦",
+    "خصائص": "✨ **الخصائص الـ 5 (5Vs):**\n1. Volume (الحجم) | 2. Velocity (السرعة) | 3. Variety (التنوع) | 4. Veracity (الموثوقية) | 5. Value (القيمة) 💎",
+    "ترتيب": """⛓️ **مخطط رحلة البيانات الضخمة:**
 <div class="step-box">1️⃣ التجميع (Collection) 📥</div>
-<div style="text-align:center; color:#58a6ff;">⬇️</div>
 <div class="step-box">2️⃣ التخزين (Storage) 🗄️</div>
-<div style="text-align:center; color:#58a6ff;">⬇️</div>
 <div class="step-box">3️⃣ المعالجة (Processing) 🧼</div>
-<div style="text-align:center; color:#58a6ff;">⬇️</div>
 <div class="step-box">4️⃣ التحليل (Analysis) 🧠</div>
-<div style="text-align:center; color:#58a6ff;">⬇️</div>
 <div class="step-box">5️⃣ اتخاذ القرار (Action) ✅</div>"""
 }
 
-# 3. إدارة الجلسة
+# 4. إدارة حالة الجلسة
 if "messages" not in st.session_state: 
-    st.session_state.messages = [{"role": "assistant", "content": "مرحباً بك يا بطل في مركز الذكاء التعليمي! أنا وكيلك الذكي، اسألني عن أي شيء في عالم البيانات الضخمة. 🤖✨"}]
-if "view" not in st.session_state: st.session_state.view = "chat"
+    st.session_state.messages = [{"role": "assistant", "content": "مرحباً بك يا بطل! أنا وكيلك الذكي، اسألني عن أي شيء في عالم البيانات الضخمة. 🤖✨"}]
+if "view" not in st.session_state: 
+    st.session_state.view = "chat"
 
-# 4. الواجهة الجانبية (Sidebar)
+# 5. الواجهة الجانبية (كل أزرارك القديمة)
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/2103/2103633.png", width=80)
-    st.markdown('<h1>Big Data Hero</h1>', unsafe_allow_html=True)
-    st.markdown('<p style="color:#00f2ff;text-align:center;font-size:14px;font-weight:bold;">📍 المحطات التعليمية</p>', unsafe_allow_html=True)
-    
-    # توزيع الأزرار بشكل أفضل
-    cols = st.columns(1)
-    if st.button("🔍 1. التعريف"): st.session_state.q_auto = "تعريف"
+    st.markdown('<p class="sidebar-title">📍 المحطات التعليمية</p>', unsafe_allow_html=True)
+    if st.button("🔍 1. البيانات الضخمه"): st.session_state.q_auto = "تعريف"
     if st.button("⚖️ 2. العادية vs الضخمة"): st.session_state.q_auto = "الفرق"
     if st.button("⚡ 3. الخصائص الـ 5"): st.session_state.q_auto = "خصائص"
-    if st.button("🤖 4. علاقتها بالذكاء الاصطناعي"): st.session_state.q_auto = "ذكاء"
-    if st.button("🚀 5. كيف تسهل حياتنا؟"): st.session_state.q_auto = "تسهل"
-    if st.button("📈 6. رسم بياني للنمو"): st.session_state.q_auto = "رسم"
-    
+    if st.button("🤖 4. الذكاء الاصطناعي"): st.session_state.q_auto = "ذكاء"
+    if st.button("🚀 5. فائدتها"): st.session_state.q_auto = "تغيير"
+    if st.button("📈 6. رسم بياني"): st.session_state.q_auto = "رسم"
     st.markdown("---")
     if st.button("⛓️ رحلة البيانات"): st.session_state.q_auto = "ترتيب"
-    if st.button("📝 اختبار الأبطال"): st.session_state.view = "quiz"
-    if st.button("🔄 محادثة جديدة"): 
-        st.session_state.messages = [{"role": "assistant", "content": "مرحباً بك مجدداً! كيف يمكنني مساعدتك اليوم؟"}]
-        st.session_state.view = "chat"
-        st.rerun()
-    
-    st.markdown('<a href="https://view.genially.com/69c2cab192730eedd4af164e" target="_blank" class="game-link">🎮 العودة للمغامرة</a>', unsafe_allow_html=True)
+    if st.button("📝 اختبار الأبطال"): st.session_state.view = "quiz"; st.rerun()
+    if st.button("🔄 محادثة جديدة"): st.session_state.messages = [{"role": "assistant", "content": "أهلاً بك مجدداً! كيف يمكنني مساعدتك؟"}]; st.session_state.view = "chat"; st.rerun()
+    st.markdown('<a href="https://view.genially.com/..." target="_blank" class="game-link">🎮 العودة للمغامرة</a>', unsafe_allow_html=True)
 
-# 5. منطق العرض
+# 6. منطق الرد الذكي (Hybrid AI)
+def get_ai_response(prompt):
+    q_low = prompt.lower()
+    # أولاً: جرب الرد من قاعدة بياناتك (أسرع وأدق لمشروعك)
+    for key in kb:
+        if key in q_low: return kb[key]
+    if "رسم" in q_low: return "إليك الرسم البياني لتطور حجم البيانات عالمياً: 📊📈"
+
+    # ثانياً: إذا لم يجد الإجابة، يسأل Hugging Face (بديل شات جي بي تي)
+    try:
+        formatted_prompt = f"<|system|>\nأنت مساعد تعليمي ذكي للأطفال اسمه Big Data Hero. تشرح بأسلوب بسيط ومشجع بالعربي وتستخدم الرموز التعبيرية.</s>\n<|user|>\n{prompt}</s>\n<|assistant|>\n"
+        response = ""
+        for message in client.chat_completion(
+            messages=[{"role": "user", "content": formatted_prompt}],
+            max_tokens=250,
+            stream=True
+        ):
+            response += message.choices[0].delta.content or ""
+        return response
+    except:
+        return "سؤال ذكي جداً! البيانات الضخمة مذهلة. هل تريد استكشاف المحطات التعليمية؟ 🤖"
+
+# العرض الرئيسي
 if st.session_state.view == "quiz":
     st.markdown("<h1>📝 اختبار التحدي</h1>", unsafe_allow_html=True)
-    with st.container():
-        st.markdown('<div class="bot-text">خلينا نشوف مين بطل البيانات الحقيقي هنا! 💪</div>', unsafe_allow_html=True)
-        q1 = st.radio("1️⃣ أي خاصية تعبر عن 'تنوع' البيانات (فيديو، نصوص، صوت)؟", ["Volume", "Variety", "Velocity"])
-        q2 = st.radio("2️⃣ من هو 'الوقود' الذي يغذي محرك الذكاء الاصطناعي؟", ["البيانات الضخمة", "الكهرباء فقط"])
-        
-        if st.button("إرسال الإجابات"):
-            if q1 == "Variety" and q2 == "البيانات الضخمة":
-                st.balloons()
-                st.success("عبقري! إجاباتك كاملة وصحيحة 🎯")
-            else:
-                st.error("أوه! هناك خطأ بسيط، راجع 'المحطات التعليمية' وجرب تاني.")
+    q1 = st.radio("1️⃣ أي خاصية تعبر عن 'تنوع' البيانات (فيديو، نصوص، صوت)؟", ["Volume", "Variety", "Velocity"])
+    q2 = st.radio("2️⃣ من هو 'الوقود' الذي يغذي محرك الذكاء الاصطناعي؟", ["البيانات الضخمة", "الكهرباء فقط"])
+    if st.button("إرسال الإجابات"):
+        if q1 == "Variety" and q2 == "البيانات الضخمة":
+            st.balloons(); st.success("عبقري! إجاباتك كاملة وصحيحة 🎯")
+        else: st.error("راجع المحطات التعليمية وجرب مرة أخرى!")
+    if st.button("العودة للدردشة"): st.session_state.view = "chat"; st.rerun()
 else:
     st.markdown("<h1>🤖 الوكيل التعليمي الذكي</h1>", unsafe_allow_html=True)
-    
-    # عرض الدردشة
-    chat_container = st.container()
-    with chat_container:
-        for m in st.session_state.messages:
-            role_class = "user-text" if m["role"] == "user" else "bot-text"
-            st.markdown(f'<div class="{role_class}">{m["content"]}</div>', unsafe_allow_html=True)
-            if "📊" in m["content"]:
-                chart_data = pd.DataFrame({'السنة': [2010, 2015, 2020, 2025], 'حجم البيانات (زيتابايت)': [2, 12, 64, 175]})
-                st.area_chart(chart_data.set_index('السنة'))
+    for m in st.session_state.messages:
+        role_class = "user-text" if m["role"] == "user" else "bot-text"
+        st.markdown(f'<div class="{role_class}">{m["content"]}</div>', unsafe_allow_html=True)
+        if "📊" in m["content"]:
+            chart_data = pd.DataFrame({'السنة': [2010, 2015, 2020, 2025], 'حجم البيانات (زيتابايت)': [2, 12, 64, 175]})
+            st.area_chart(chart_data.set_index('السنة'))
 
-    # إدخال المستخدم
     u_input = st.chat_input("اسألني عن أي شيء...")
     query = u_input or st.session_state.get("q_auto")
 
     if query:
-        ans = None
-        q_low = query.lower()
-        
-        # منطق الرد المطور
-        if any(w in q_low for w in ["تعريف", "ماهي", "ما هي"]): 
-            ans = kb["تعريف"] + "\n\n💡 **هل تعلم؟** أن البيانات الضخمة تسمى أيضاً 'نفط القرن الحادي والعشرين'."
-        elif any(w in q_low for w in ["فرق", "عادية", "مقارنة"]): 
-            ans = kb["الفرق"]
-        elif any(w in q_low for w in ["ذكاء", "ai", "صناعي"]): 
-            ans = kb["ذكاء_اصطناعي"]
-        elif any(w in q_low for w in ["تسهل", "حياتنا", "فائدة"]): 
-            ans = kb["تغيير_الحياة"]
-        elif any(w in q_low for w in ["خصائص", "5"]): 
-            ans = kb["خصائص"]
-        elif "رسم" in q_low: 
-            ans = "إليك الرسم البياني لتطور حجم البيانات عالمياً: 📊📈"
-        elif any(w in q_low for w in ["ترتيب", "مخطط", "خطوات"]): 
-            ans = kb["خطوات_ترتيب"]
-        
-        if ans is None:
-            ans = "هذا سؤال ذكي جداً! بكلمات بسيطة، البيانات الضخمة هي اللي بتخلي تطبيقات زي 'تيك توك' أو 'نتفليكس' تعرف ذوقك بالظبط. تحب تعرف أكتر عن 'خصائص البيانات'؟"
-
         st.session_state.messages.append({"role": "user", "content": query})
+        with st.spinner("جاري التفكير..."):
+            ans = get_ai_response(query)
         st.session_state.messages.append({"role": "assistant", "content": ans})
         if "q_auto" in st.session_state: del st.session_state["q_auto"]
         st.rerun()
